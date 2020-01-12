@@ -3,4 +3,4 @@ project(ex4)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(ex4 main.cpp)
+add_executable(ex4 main.cpp server_side.h MySerialServer.cpp MySerialServer.h ClientHandler.h MyTestClientHandler.cpp MyTestClientHandler.h Solver.h)
