@@ -6,6 +6,7 @@
 #define EX4_BOOT_H
 
 #include <iostream>
+
 using namespace std;
 
 namespace boot{
