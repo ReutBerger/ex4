@@ -14,6 +14,7 @@ private:
     int m_port;
     ClientHandler *m_ch;
     sem_t m_sync;
+
 public:
     void open(int port, ClientHandler* c);
     void stop();

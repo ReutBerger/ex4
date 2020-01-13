@@ -5,20 +5,28 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
+
 #include "MySerialServer.h"
+
 using namespace std;
-// start point of the thread
+
+// C function, start point of the thread
 static int openServer(MySerialServer* obj) {
     return obj->openServerFunc();
 }
+
 void MySerialServer::open(int port, ClientHandler* c) {
     this->m_port = port;
     this->m_ch = c;
+
+    // Launch the server thread
     thread thread_obj(openServer, this);
 
+    // wait until the simulator is connected
     sem_init(&this->m_sync, 0, 0);
     sem_wait(&this->m_sync);
 
+    // Return to the main thread
     thread_obj.detach();
     sem_destroy(&this->m_sync);
 }
@@ -60,6 +68,8 @@ int MySerialServer::openServerFunc(){
     } else{
         cout << "Server is now listening ..." << endl;
     }
+
+    // accepting the clients in serial
 int i = 0;
     while (i < 10) {
         // accepting a client

@@ -18,13 +18,10 @@ namespace boot{
 class boot::Main {
 public:
     static int main(int port) {
-//        MySerialServer * mss = new MySerialServer();
-//        MyTestClientHandler *mtch = new MyTestClientHandler();
-//        mss->open(port,mtch);
-
-        MySerialServer* s = new MySerialServer();
+        MySerialServer* mss = new MySerialServer();
         ClientHandler *c  = new MyTestClientHandler();
-        s->open(port, c);
+        mss->open(port, c);
+
         StringReverse *sr = new StringReverse();
         cout << sr->Solve("abcd") << endl;
         return 0;
