@@ -10,7 +10,7 @@ using namespace std;
 
 class ClientHandler {
 public:
-    void handleClient(istream input , ostream output);
+    virtual void handleClient(int socket_client) = 0;
 };
 
 

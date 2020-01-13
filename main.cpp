@@ -6,7 +6,8 @@
 #define EX4_BOOT_H
 
 #include <iostream>
-
+#include "MySerialServer.h"
+#include "MyTestClientHandler.h"
 using namespace std;
 
 namespace boot{
@@ -17,14 +18,21 @@ namespace boot{
 class boot::Main {
 public:
     static int main(int port) {
-        StringReverse *s = new StringReverse();
-        cout << s->Solve("abcd") << endl;
+//        MySerialServer * mss = new MySerialServer();
+//        MyTestClientHandler *mtch = new MyTestClientHandler();
+//        mss->open(port,mtch);
+
+        MySerialServer* s = new MySerialServer();
+        ClientHandler *c  = new MyTestClientHandler();
+        s->open(port, c);
+        StringReverse *sr = new StringReverse();
+        cout << sr->Solve("abcd") << endl;
         return 0;
     }
 };
 
 int main(int argc, char *argv[]) {
 //    boot::Main::main(atoi(argv[1]));
-    boot::Main::main(atoi("1234"));
+    boot::Main::main(atoi("5400"));
 }
 #endif //EX4_BOOT_H

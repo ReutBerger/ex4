@@ -3,3 +3,7 @@
 //
 
 #include "MyTestClientHandler.h"
+
+void MyTestClientHandler::handleClient(int socket_client){
+    cout << "in handle client" << endl;
+}
