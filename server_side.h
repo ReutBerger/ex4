@@ -13,8 +13,8 @@ namespace server_side{
 
 class server_side:: Server {
 public:
-    virtual void open(int port, ClientHandler* c);
-    virtual void stop();
+     void open(int port, ClientHandler* c);
+     void stop();
 };
 
 
