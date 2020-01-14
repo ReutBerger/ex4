@@ -19,6 +19,7 @@ void FileCacheManager::insert(string key, string obj) {
     cacheInsert(key, obj);
     fileInsert(key, obj);
 }
+
 //TODO: Check if work. if problem in compile this us the problme
 bool FileCacheManager::find(string key) {
     ifstream file_obj;
@@ -85,7 +86,7 @@ void FileCacheManager::cacheInsert(string key, string obj) {
     mCache[key] = {obj, mObjectsList.begin()};
 }
 
-void fileInsert(string key, string obj) {
+void FileCacheManager::fileInsert(string key, string obj) {
     ofstream file_obj;
 
     // Opening file in output mode
