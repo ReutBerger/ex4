@@ -6,11 +6,13 @@
 #define EX4_MYTESTCLIENTHANDLER_H
 
 #include "ClientHandler.h"
+#include "Solver.h"
+#include "CacheManager.h"
 
 class MyTestClientHandler : public ClientHandler {
 private:
-   // Solver solver;
-   // CacheManger am;
+    Solver<string, string> solver;
+    CacheManager<string> am;
 public:
     void handleClient(int socket_client) override ;
 };
