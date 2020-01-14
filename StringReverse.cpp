@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-string StringReverse::Solve(string problem) {
+string StringReverse::solve(string problem) {
     reverse(problem.begin(), problem.end());
     return problem;
 }

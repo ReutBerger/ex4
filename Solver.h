@@ -8,6 +8,7 @@
 template <typename Problem, typename Solution>
 
 class Solver{
-    Solution Solve(Problem problem);
+public:
+    Solution solve(Problem problem);
 };
 #endif //EX4_SOLVER_H

@@ -14,16 +14,20 @@ namespace boot{
     class Main;
 }
 
+#include "CacheManager.h"
+#include "FileCacheManager.h"
 #include "StringReverse.h"
 class boot::Main {
 public:
     static int main(int port) {
         MySerialServer* mss = new MySerialServer();
-        ClientHandler *c  = new MyTestClientHandler();
+        StringReverse *sr = new StringReverse();
+        //cout << sr->solve("abcd") << endl;
+        CacheManager<string>* cm = new FileCacheManager(10);
+        ClientHandler *c  = new MyTestClientHandler(sr,cm);
         mss->open(port, c);
 
-        StringReverse *sr = new StringReverse();
-        cout << sr->Solve("abcd") << endl;
+
         return 0;
     }
 };

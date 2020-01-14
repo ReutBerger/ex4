@@ -13,7 +13,7 @@ template <class T>
 
 class CacheManager {
 public:
-
+    bool find(string key);
     void insert(string key, T obj);
     T get(string key);
 
