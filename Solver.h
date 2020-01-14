@@ -9,6 +9,6 @@ template <typename Problem, typename Solution>
 
 class Solver{
 public:
-    Solution solve(Problem problem);
+    virtual Solution solve(Problem problem) = 0;
 };
 #endif //EX4_SOLVER_H
