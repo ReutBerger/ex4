@@ -22,7 +22,6 @@ public:
     static int main(int port) {
         MySerialServer* mss = new MySerialServer();
         StringReverse *sr = new StringReverse();
-        //cout << sr->solve("abcd") << endl;
         CacheManager<string>* cm = new FileCacheManager(10);
         ClientHandler *c  = new MyTestClientHandler(sr,cm);
         mss->open(port, c);
