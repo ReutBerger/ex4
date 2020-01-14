@@ -10,23 +10,23 @@
 #include <iostream>
 #include <unordered_map>
 #include <list>
+
 using namespace std;
 
-template <class T>
-
-class FileCacheManager : public CacheManager<T> {
+class FileCacheManager : public CacheManager<string> {
 private:
     int mCapacity;
-    unordered_map<string, typename std::pair<T, list<string>::iterator>> mCache;
+    unordered_map<string, typename std::pair<string, list<string>::iterator>> mCache;
     list<string> mObjectsList;
 
-    void cacheInsert(string key, T obj);
-    void fileInsert(string key, T obj);
+    void cacheInsert(string key, string obj);
+    void fileInsert(string key, string obj);
 
 public:
 
-    void insert(string key, T obj);
-    T get(string key);
+    bool find(string key);
+    void insert(string key, string obj);
+    string get(string key);
     FileCacheManager(int capacity);
     ~FileCacheManager();
 };

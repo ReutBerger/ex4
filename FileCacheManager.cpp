@@ -3,29 +3,45 @@
 //
 
 #include "FileCacheManager.h"
+#include <stdio.h>
 #include <fstream>
-template <class T>
 
 // Constructor
-FileCacheManager<T>::FileCacheManager(int capacity) {
+FileCacheManager::FileCacheManager(int capacity) {
     mCapacity = capacity;
 }
 
-template <class T>
-FileCacheManager<T>::~FileCacheManager() {
+FileCacheManager::~FileCacheManager() {
 
 }
 
-template <class T>
-void FileCacheManager<T>::insert(string key, T obj) {
+void FileCacheManager::insert(string key, string obj) {
     cacheInsert(key, obj);
     fileInsert(key, obj);
 }
-
-template <class T>
-T FileCacheManager<T>::get(string key) {
+//TODO: Check if work. if problem in compile this us the problme
+bool FileCacheManager::find(string key) {
     ifstream file_obj;
-    T obj;
+    string obj;
+
+    // Search in cache
+    if (mCache.find(key) != mCache.end()) {
+        return true;
+    }
+
+    // Not found in cache, search in file
+    // Opening file in input mode
+    file_obj.open("Matrix" + key, ios::in|ios::binary);
+    // File not found, throw an exception
+    if (!file_obj) {
+        return false;
+    }
+    return true;
+}
+
+string FileCacheManager::get(string key) {
+    ifstream file_obj;
+    string obj;
 
     // Search in cache
     if (mCache.find(key) != mCache.end()) {
@@ -36,7 +52,7 @@ T FileCacheManager<T>::get(string key) {
 
     // Not found in cache, search in file
     // Opening file in input mode
-    file_obj.open(obj.class_name + key, ios::in|ios::binary);
+    file_obj.open("Matrix" + key, ios::in|ios::binary);
     // File not found, throw an exception
     if (!file_obj)
         throw "key not found";
@@ -47,8 +63,7 @@ T FileCacheManager<T>::get(string key) {
     return obj;
 }
 
-template <class T>
-void FileCacheManager<T>::cacheInsert(string key, T obj) {
+void FileCacheManager::cacheInsert(string key, string obj) {
     // Insert it into map if not present already
     if (mCache.find(key) == mCache.end()) {
         // Check if the map can hold more objects
@@ -70,12 +85,11 @@ void FileCacheManager<T>::cacheInsert(string key, T obj) {
     mCache[key] = {obj, mObjectsList.begin()};
 }
 
-template <class T>
-void fileInsert(string key, T obj) {
+void fileInsert(string key, string obj) {
     ofstream file_obj;
 
     // Opening file in output mode
-    file_obj.open(obj.class_name + key, ios::out|ios::trunc|ios::binary);
+    file_obj.open("Matrix" + key, ios::out|ios::trunc|ios::binary);
     if (!file_obj)
         throw "Failed in creating file";
 
