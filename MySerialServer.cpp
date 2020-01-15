@@ -85,9 +85,7 @@ int i = 0;
         i++;
     }
 
+//        sem_post(&this->m_sync);
 
     close(socketfd); //closing the listening socket
-
-    //reading from client
-
 }

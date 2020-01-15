@@ -33,7 +33,7 @@ bool FileCacheManager::find(string key) {
 
     // Not found in cache, search in file
     // Opening file in input mode
-    file_obj.open("Matrix" + key, ios::in|ios::binary);
+    file_obj.open("Matrix" + key + ".txt", ios::in|ios::binary);
     // File not found, throw an exception
     if (!file_obj) {
         return false;
@@ -54,7 +54,7 @@ string FileCacheManager::get(string key) {
 
     // Not found in cache, search in file
     // Opening file in input mode
-    file_obj.open("Matrix" + key, ios::in|ios::binary);
+    file_obj.open("Matrix" + key + ".txt", ios::in|ios::binary);
     // File not found, throw an exception
     if (!file_obj)
         throw "key not found";

@@ -32,7 +32,7 @@ public:
 };
 
 int main(int argc, char *argv[]) {
-//    boot::Main::main(atoi(argv[1]));
-    boot::Main::main(atoi("5400"));
+    boot::Main::main(atoi(argv[1]));
+//    boot::Main::main(atoi("5400"));
 }
 #endif //EX4_BOOT_H
