@@ -19,14 +19,14 @@ private:
     unordered_map<string, typename std::pair<string, list<string>::iterator>> mCache;
     list<string> mObjectsList;
 
-    void cacheInsert(string key, string obj);
-    void fileInsert(string key, string obj);
+    void cacheInsert(string& key, string& obj);
+    void fileInsert(string& key, string& obj);
 
 public:
 
-    bool find(string key);
-    void insert(string key, string obj);
-    string get(string key);
+    bool find(string& key);
+    void insert(string& key, string& obj);
+    string get(string& key);
     FileCacheManager(int capacity);
     ~FileCacheManager();
 };
