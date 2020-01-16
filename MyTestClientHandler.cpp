@@ -14,17 +14,20 @@ void MyTestClientHandler::handleClient(int socket_client){
 
     while(1) {
         //reading from client
-        int valread = read(socket_client, buffer, 1024);
+        int valread = read(socket_client, buffer, sizeof(buffer)-1);
 
         // If there is nothing to read, break
-        if (valread == 0) {
+        if (valread < 0) {
+            cerr << "read error" << endl;
             break;
         }
+
+        buffer[valread] = 0;
         string problem = string(buffer);
-        problem = problem.substr(0, valread);
         cout << "problem: " << problem << endl;
         if (!problem.compare("end")) {
             close(socket_client);
+            cout << "end, close socket" << endl;
             break;
         }
         string solution;

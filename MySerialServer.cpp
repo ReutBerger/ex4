@@ -16,31 +16,25 @@ static int openServer(MySerialServer* obj) {
 }
 
 void MySerialServer::open(int port, ClientHandler* c) {
+    this->socketfd = -1;
     this->m_port = port;
     this->m_ch = c;
 
     // Launch the server thread
     thread thread_obj(openServer, this);
-
-    // wait until the simulator is connected
-    sem_init(&this->m_sync, 0, 0);
-    sem_wait(&this->m_sync);
-
-    // Return to the main thread
-    thread_obj.detach();
-    sem_destroy(&this->m_sync);
+    thread_obj.join();
 }
 
 void MySerialServer::stop(){
-
+    //closing the listening socket
+    close(socketfd);
 }
 
 int MySerialServer::openServerFunc(){
 
     //create socket
-    int socketfd = socket(AF_INET, SOCK_STREAM, 0);
+    socketfd = socket(AF_INET, SOCK_STREAM, 0);
     if (socketfd == -1) {
-        //todo: throw exp??
         //error
         cerr << "Could not create a socket"<<std::endl;
         return -1;
@@ -65,27 +59,19 @@ int MySerialServer::openServerFunc(){
     if (listen(socketfd, 5) == -1) { //can also set to SOMAXCON (max connections)
         cerr << "Error during listening command" << endl;
         return -3;
-    } else{
-        cout << "Server is now listening ..." << endl;
     }
+    cout << "Server is now listening ..." << endl;
 
     // accepting the clients in serial
-int i = 0;
-    while (i < 10) {
+    while (1) {
         // accepting a client
         int client_socket = accept(socketfd, (struct sockaddr *)&address,
                                    (socklen_t*)&address);
-
         if (client_socket == -1) {
             cerr << "Error accepting client" << endl;
             return -4;
         }
+
         this->m_ch->handleClient(client_socket);
-
-        i++;
     }
-
-//        sem_post(&this->m_sync);
-
-    close(socketfd); //closing the listening socket
 }

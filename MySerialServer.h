@@ -11,9 +11,9 @@ using namespace server_side;
 
 class MySerialServer : public Server {
 private:
+    int socketfd;
     int m_port;
     ClientHandler *m_ch;
-    sem_t m_sync;
 
 public:
     void open(int port, ClientHandler* c);
