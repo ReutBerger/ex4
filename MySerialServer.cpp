@@ -49,6 +49,11 @@ int MySerialServer::openServerFunc(){
     //we need to convert our number
     // to a number that the network understands.
 
+    // Time-out is set for 2 minutes
+    struct timeval tv;
+    tv.tv_sec = 120;
+    setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof(tv));
+
     //the actual bind command
     if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
         cerr << "Could not bind the socket to an IP" << endl;

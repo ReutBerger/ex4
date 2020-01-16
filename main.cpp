@@ -23,7 +23,7 @@ public:
         try {
             MySerialServer *mss = new MySerialServer();
             StringReverse *sr = new StringReverse();
-            CacheManager<string> *cm = new FileCacheManager(10);
+            CacheManager<string> *cm = new FileCacheManager(5);
             ClientHandler *c = new MyTestClientHandler(sr, cm);
             mss->open(port, c);
             mss->stop();
