@@ -8,6 +8,12 @@
 #include <iostream>
 #include "MySerialServer.h"
 #include "MyTestClientHandler.h"
+using namespace std;
+
+namespace boot{
+    class Main;
+}
+
 #include "CacheManager.h"
 #include "FileCacheManager.h"
 #include "StringReverse.h"
@@ -22,7 +28,7 @@ public:
     static int main(int port) {
         try {
             MySerialServer *mss = new MySerialServer();
-            StringReverse *sr = new StringReverse();
+            Solver<string ,string> *sr = new StringReverse();
             CacheManager<string> *cm = new FileCacheManager(5);
             ClientHandler *c = new MyTestClientHandler(sr, cm);
             mss->open(port, c);
