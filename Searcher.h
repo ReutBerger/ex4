@@ -8,7 +8,7 @@
 template <typename T >
 class Searcher {
 public:
-    string
+
 };
 
 #endif //EX4_SEARCHER_H
