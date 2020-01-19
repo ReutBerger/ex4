@@ -6,6 +6,7 @@
 #define EX4_MATRIX_H
 
 #include <vector>
+#include <string>
 #include "Searchable.h"
 #include "Point.h"
 
@@ -15,6 +16,7 @@ private:
      State<Point> startPoint;
      State<Point> goalPoint;
 public:
+    Matrix(vector<string> problem);
     State<Point> getInitialState();
     State<Point> getGoalState();
     bool isGoalState();
