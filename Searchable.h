@@ -11,10 +11,11 @@ using namespace std;
 
 template <class T>
 class Searchable {
-    State<T> getInitialState();
-//    Maybe State<T> instead bool ??
-    bool getGoalState();
-    vector<State<T>> getAllPossibleStates(State<T> s);
+public:
+    virtual State<T> getInitialState() = 0;
+    virtual State<T> getGoalState() = 0;
+    virtual bool isGoalState() = 0;
+    virtual vector<State<T>> getAllPossibleStates(State<T> s) = 0;
 };
 
 
