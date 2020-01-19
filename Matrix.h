@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "Searchable.h"
+#include "Point.h"
 
 class Matrix : public Searchable<Point>{
 private:
