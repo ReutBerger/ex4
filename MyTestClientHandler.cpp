@@ -7,7 +7,7 @@
 #include <netinet/in.h>
 
 void MyTestClientHandler::handleClient(int socket_client){
-    cout << "in handle client" << endl;
+    cout << "in My Test handle client" << endl;
 
     // Declare a buffer to get the data
     char buffer[1024] = {0};
@@ -27,7 +27,6 @@ void MyTestClientHandler::handleClient(int socket_client){
         cout << "problem: " << problem << endl;
         if (!problem.compare("end")) {
             close(socket_client);
-            cout << "end, close socket" << endl;
             break;
         }
         string solution;

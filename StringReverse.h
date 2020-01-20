@@ -11,8 +11,6 @@
 
 using namespace std;
 
-//template <typename Problem, typename Solution>
-
 class StringReverse : public Solver<string, string> {
 public:
     string solve(string problem);

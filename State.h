@@ -15,6 +15,9 @@ public:
     State<T>(T state);
 //    Maybe *&state1 ??
     bool operator==(State<T> *state1);
+    double getCost();
+    State<T> getCameFromState();
+    void setCameFromState(State<T> *state1);
     ~State();
 };
 
