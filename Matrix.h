@@ -19,7 +19,7 @@ public:
     Matrix(vector<string> problem);
     State<Point> getInitialState();
     State<Point> getGoalState();
-    bool isGoalState();
+    bool isGoalState(State<Point> s);
     vector<State<Point>> getAllPossibleStates(State<Point> s);
 };
 

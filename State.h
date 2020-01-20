@@ -12,13 +12,26 @@ private:
     double cost;
     State<T> *came_from;
 public:
-    State<T>(T *state, double cost);
+    State() {}
+    State(T *state, double cost) {
+        this->state = state;
+        this->cost = cost;
+        this->came_from = nullptr;
+    }
 //    Maybe *&state1 ??
-    bool operator==(State<T> *state1);
-    double getCost();
-    State<T> getCameFromState();
-    void setCameFromState(State<T> *state1);
-    ~State();
+    bool operator==(State<T> *state1) {
+        return this->state == state1;
+    }
+    double getCost() {
+        return this->cost;
+    }
+    State<T> getCameFromState() {
+        return this->came_from;
+    }
+    void setCameFromState(State<T> *state1) {
+        this->came_from = state1;
+    }
+    ~State(){}
 };
 
 
