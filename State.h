@@ -18,19 +18,28 @@ public:
         this->cost = cost;
         this->came_from = nullptr;
     }
+
+    T* getState() {
+        return this->state;
+    }
+
 //    Maybe *&state1 ??
     bool operator==(State<T> *state1) {
-        return this->state == state1;
+        return this->state == state1->getState();
     }
+
     double getCost() {
         return this->cost;
     }
+
     State<T> getCameFromState() {
         return this->came_from;
     }
+
     void setCameFromState(State<T> *state1) {
         this->came_from = state1;
     }
+
     ~State(){}
 };
 

@@ -46,7 +46,7 @@ public:
             this->numOfVisitedNodes += 1;
 
             // If we got to the goal state, return the path
-            if (searchable->isGoalState(currentState)) {
+            if (searchable->getGoalState().operator==(currentState)) {
                 // Update the path Cost
                 this->PathCost += currentState->getCost();
                 path.insert(path.begin(), currentState);

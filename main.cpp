@@ -14,6 +14,7 @@
 #include "CacheManager.h"
 #include "FileCacheManager.h"
 #include "StringReverse.h"
+#include "Matrix.h"
 
 
 using namespace std;
@@ -43,7 +44,19 @@ public:
 int main(int argc, char *argv[]) {
    // boot::Main::main(atoi(argv[1]));
    State<Point> *s = new State<Point>(new Point(0,0),4);
-   State<Point> *v = new State<Point>(new Point(0,0),4);
-   cout << s->getCost();
+   State<Point> *v = s;
+   cout << s->getCost() << endl;
+//   if (s->operator==(v))
+//       cout << 1;
+//   else
+//       cout << 0;
+   vector<string> vec = {"1,2,3","4,5,6","7,8,9","0,0","2,2","end"};
+   Matrix* m = new Matrix(vec);
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            cout << "(" << m->matrix[i][j].getState()->getX() << "," << m->matrix[i][j].getState()->getY() << ")";
+        }
+        cout << endl;
+    }
 }
 #endif //EX4_BOOT_H

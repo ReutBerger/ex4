@@ -19,7 +19,7 @@ Matrix::Matrix(vector<string> problem) {
             if (line[count] == ',') {
                 temp_num = temp_num.substr(0,count);
                 // Create new state
-                State<Point>* s = new State<Point>(new Point(i,j), stoi(temp_num));
+                State<Point>* s = new State<Point>(new Point(i,j), stod(temp_num));
                 lineVec.push_back(*s);
                 /*TRY*/ cout << temp_num <<i << j << endl;
                 i++;
@@ -31,7 +31,7 @@ Matrix::Matrix(vector<string> problem) {
         }
         if(temp_num != "") {
             // Create new state
-            State<Point>* s = new State<Point>(new Point(i,j), stoi(temp_num));
+            State<Point>* s = new State<Point>(new Point(i,j), stod(temp_num));
             lineVec.push_back(*s);
             /*TRY*/ cout << temp_num << i << j << endl;
             temp_num = "";
@@ -44,12 +44,12 @@ Matrix::Matrix(vector<string> problem) {
     // Initialize members
     this->matrix = matrix;
     string temp = problem[problem.size() - 3];
-    i = temp[0];
-    j = temp[2];
+    i = (int)temp[0] - '0';
+    j = (int)temp[2] - '0';
     this->startPoint = matrix[i][j];
     temp = problem[problem.size() - 2];
-    i = temp[0];
-    j = temp[2];
+    i = (int)temp[0] - '0';
+    j = (int)temp[2] - '0';
     this->goalPoint = matrix[i][j];
 }
 
@@ -61,8 +61,30 @@ State<Point> Matrix::getGoalState() {
     return this->goalPoint;
 }
 
-bool Matrix::isGoalState(State<Point> s) {
+vector<State<Point>> Matrix::getAllPossibleStates(State<Point> s) {
+    vector<State<Point>> adj_vec;
+    int x = s.getState()->getX();
+    int y = s.getState()->getY();
+    int row_size = this->matrix.front().size();
 
+    // Check state up limit
+    if (y != 0) {
+        adj_vec.push_back(this->matrix[x][y - 1]);
+    }
+    // Check state left limit
+    if (x != 0) {
+        adj_vec.push_back(this->matrix[x - 1][y]);
+    }
+    // Check state down limit
+    if (y != row_size - 1) {
+        adj_vec.push_back(this->matrix[x][y + 1]);
+    }
+    // Check state right limit
+    if (x != row_size - 1) {
+        adj_vec.push_back(this->matrix[x + 1][y]);
+    }
+
+    return adj_vec;
 }
 
 
