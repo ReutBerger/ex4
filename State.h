@@ -8,11 +8,11 @@
 template <class T>
 class State {
 private:
-    T state;
+    T *state;
     double cost;
     State<T> *came_from;
 public:
-    State<T>(T state, double cost);
+    State<T>(T *state, double cost);
 //    Maybe *&state1 ??
     bool operator==(State<T> *state1);
     double getCost();
