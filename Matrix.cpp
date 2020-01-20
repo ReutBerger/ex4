@@ -12,8 +12,8 @@ Matrix::Matrix(vector<string> problem) {
     vector<State<Point>> lineVec;
     int i = 0, j = 0, count = 0;
     string line, temp_num = "";
-    while (j < problem.size() - 3) {
-        line = problem[j];
+    while (i < problem.size() - 3) {
+        line = problem[i];
         while (line[count] != '\0') {
             temp_num += line[count];
             if (line[count] == ',') {
@@ -22,7 +22,7 @@ Matrix::Matrix(vector<string> problem) {
                 State<Point>* s = new State<Point>(new Point(i,j), stod(temp_num));
                 lineVec.push_back(*s);
                 /*TRY*/ cout << temp_num <<i << j << endl;
-                i++;
+                j++;
                 line.erase(0, count + 1);
                 temp_num = "";
                 count = -1;
@@ -37,9 +37,10 @@ Matrix::Matrix(vector<string> problem) {
             temp_num = "";
         }
         count = 0;
-        i = 0;
-        j++;
+        j = 0;
+        i++;
         matrix.push_back(lineVec);
+        lineVec.clear();
     }
     // Initialize members
     this->matrix = matrix;
@@ -68,19 +69,19 @@ vector<State<Point>> Matrix::getAllPossibleStates(State<Point> s) {
     int row_size = this->matrix.front().size();
 
     // Check state up limit
-    if (y != 0) {
+    if (y != 0 && (this->matrix[x][y - 1].getCost() != -1)) {
         adj_vec.push_back(this->matrix[x][y - 1]);
     }
     // Check state left limit
-    if (x != 0) {
+    if (x != 0 && (this->matrix[x - 1][y].getCost() != -1)) {
         adj_vec.push_back(this->matrix[x - 1][y]);
     }
     // Check state down limit
-    if (y != row_size - 1) {
+    if (y != row_size - 1 && (this->matrix[x][y + 1].getCost() != -1)) {
         adj_vec.push_back(this->matrix[x][y + 1]);
     }
     // Check state right limit
-    if (x != row_size - 1) {
+    if (x != row_size - 1 && (this->matrix[x + 1][y].getCost() != -1)) {
         adj_vec.push_back(this->matrix[x + 1][y]);
     }
 
