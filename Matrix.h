@@ -17,10 +17,10 @@ private:
      State<Point> goalPoint;
 public:
     Matrix(vector<string> problem);
-    State<Point> getInitialState();
-    State<Point> getGoalState();
+    State<Point> getInitialState() override ;
+    State<Point> getGoalState() override ;
     bool isGoalState(State<Point> s);
-    vector<State<Point>> getAllPossibleStates(State<Point> s);
+    vector<State<Point>> getAllPossibleStates(State<Point> s) {}
 };
 
 

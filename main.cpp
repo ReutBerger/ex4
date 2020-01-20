@@ -8,15 +8,14 @@
 #include <iostream>
 #include "MySerialServer.h"
 #include "MyTestClientHandler.h"
-using namespace std;
-
-namespace boot{
-    class Main;
-}
+#include "State.h"
+#include "Point.h"
 
 #include "CacheManager.h"
 #include "FileCacheManager.h"
 #include "StringReverse.h"
+
+
 using namespace std;
 
 namespace boot{
@@ -42,6 +41,9 @@ public:
 };
 
 int main(int argc, char *argv[]) {
-    boot::Main::main(atoi(argv[1]));
+   // boot::Main::main(atoi(argv[1]));
+   State<Point> *s = new State<Point>(new Point(0,0),4);
+   State<Point> *v = new State<Point>(new Point(0,0),4);
+   cout << s->getCost();
 }
 #endif //EX4_BOOT_H
