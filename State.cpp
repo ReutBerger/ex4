@@ -5,8 +5,10 @@
 #include "State.h"
 
 template <class T>
-State<T>::State(T state) {
+State<T>::State(T state, double cost) {
     this->state = state;
+    this->cost = cost;
+    this->came_from = nullptr;
 }
 
 template <class T>
