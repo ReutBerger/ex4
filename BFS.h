@@ -5,7 +5,7 @@
 #ifndef EX4_BFS_H
 #define EX4_BFS_H
 
-#include<iostream>
+#include <iostream>
 #include <list>
 #include <queue>
 
@@ -45,8 +45,9 @@ public:
             // Update the number of node we visited in this problem by 1.
             this->numOfVisitedNodes += 1;
 
+            // TODO: A PROBLEM! WE NEVER ENTER THIS IF!
             // If we got to the goal state, return the path
-            if (searchable->getGoalState().operator==(currentState)) {
+            if (searchable->getGoalState()->operator==(currentState)) {
                 // Update the path Cost
                 this->PathCost += currentState->getCost();
                 path.insert(path.begin(), currentState);
@@ -64,7 +65,18 @@ public:
                 // Check if we visited the current state neighbors
                 for (State<T> *adj : searchable->getAllPossibleStates(currentState)) {
                     // Adjacent has not been visited before
-                    if (find(visitedNodes.begin(), visitedNodes.end(), adj) != visitedNodes.end()) {
+//                    if (find(visitedNodes.begin(), visitedNodes.end(), adj) != visitedNodes.end()) {
+                    bool visited = false;
+                    for(State<T>* s : visitedNodes) {
+                        if (s->operator==(adj)) {
+                            visited = true;
+                            break;
+                        }
+                    }
+                    if (visited) {
+                        continue;
+                    }
+                    else {
                         // Mark the current node dad as the current node
                         adj->setCameFromState(currentState);
                         visitedNodes.push_back(adj);

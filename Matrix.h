@@ -13,15 +13,17 @@
 class Matrix : public Searchable<Point>{
 private:
 //     vector<vector<State<Point>>> matrix;
-     State<Point> startPoint;
-     State<Point> goalPoint;
+     State<Point>* startPoint;
+     State<Point>* goalPoint;
+
 public:
     vector<vector<State<Point>>> matrix;
+
     Matrix(vector<string> problem);
-    State<Point> getInitialState() override;
-    State<Point> getGoalState() override;
+    State<Point>* getInitialState() override;
+    State<Point>* getGoalState() override;
 //    bool isGoalState(State<Point> s);
-    vector<State<Point>> getAllPossibleStates(State<Point> s);
+    vector<State<Point>*> getAllPossibleStates(State<Point> *s) override;
 };
 
 

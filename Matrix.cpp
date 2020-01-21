@@ -7,11 +7,10 @@
 
 // Constructor- build the matrix and update members
 Matrix::Matrix(vector<string> problem) {
-    // Create Matrix
-    vector<vector<State<Point>>> matrix;
     vector<State<Point>> lineVec;
     int i = 0, j = 0, count = 0;
     string line, temp_num = "";
+
     while (i < problem.size() - 3) {
         line = problem[i];
         while (line[count] != '\0') {
@@ -42,52 +41,45 @@ Matrix::Matrix(vector<string> problem) {
         matrix.push_back(lineVec);
         lineVec.clear();
     }
+
     // Initialize members
-    this->matrix = matrix;
-    string temp = problem[problem.size() - 3];
-    i = (int)temp[0] - '0';
-    j = (int)temp[2] - '0';
-    this->startPoint = matrix[i][j];
-    temp = problem[problem.size() - 2];
-    i = (int)temp[0] - '0';
-    j = (int)temp[2] - '0';
-    this->goalPoint = matrix[i][j];
+    sscanf(problem[problem.size() - 3].c_str(), "%d,%d", &i, &j);
+    this->startPoint = &matrix[i][j];
+
+    sscanf(problem[problem.size() - 2].c_str(), "%d,%d", &i, &j);
+    this->goalPoint = &matrix[i][j];
 }
 
-State<Point> Matrix::getInitialState() {
+State<Point>* Matrix::getInitialState() {
     return this->startPoint;
 }
 
-State<Point> Matrix::getGoalState() {
+State<Point>* Matrix::getGoalState() {
     return this->goalPoint;
 }
 
-vector<State<Point>> Matrix::getAllPossibleStates(State<Point> s) {
-    vector<State<Point>> adj_vec;
-    int x = s.getState()->getX();
-    int y = s.getState()->getY();
+vector<State<Point>*> Matrix::getAllPossibleStates(State<Point> *s) {
+    vector<State<Point>*> adj_vec;
+    int x = s->getState()->getX();
+    int y = s->getState()->getY();
     int row_size = this->matrix.front().size();
 
     // Check state up limit
     if (y != 0 && (this->matrix[x][y - 1].getCost() != -1)) {
-        adj_vec.push_back(this->matrix[x][y - 1]);
+        adj_vec.push_back(&this->matrix[x][y - 1]);
     }
     // Check state left limit
     if (x != 0 && (this->matrix[x - 1][y].getCost() != -1)) {
-        adj_vec.push_back(this->matrix[x - 1][y]);
+        adj_vec.push_back(&this->matrix[x - 1][y]);
     }
     // Check state down limit
     if (y != row_size - 1 && (this->matrix[x][y + 1].getCost() != -1)) {
-        adj_vec.push_back(this->matrix[x][y + 1]);
+        adj_vec.push_back(&this->matrix[x][y + 1]);
     }
     // Check state right limit
     if (x != row_size - 1 && (this->matrix[x + 1][y].getCost() != -1)) {
-        adj_vec.push_back(this->matrix[x + 1][y]);
+        adj_vec.push_back(&this->matrix[x + 1][y]);
     }
 
     return adj_vec;
 }
-
-
-//TODO - delete - example Matrix
-// vector<string> vec = {"1,2,3","4,5,6","7,8,9","0,0","2,2","end"};

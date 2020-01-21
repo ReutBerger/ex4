@@ -1,7 +1,6 @@
 //
 // Created by reut on 1/18/20.
 //
-//TODO - Not good/ change this class!!!!!!!
 #ifndef EX4_STATE_H
 #define EX4_STATE_H
 
@@ -32,7 +31,7 @@ public:
         return this->cost;
     }
 
-    State<T> getCameFromState() {
+    State<T>* getCameFromState() {
         return this->came_from;
     }
 
