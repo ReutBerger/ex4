@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 
-void MyTestClientHandler::handleClient(int socket_client){
+int MyTestClientHandler::handleClient(int socket_client){
     cout << "in My Test handle client" << endl;
 
     // Declare a buffer to get the data
@@ -45,6 +45,8 @@ void MyTestClientHandler::handleClient(int socket_client){
             cerr << "Could not send message"<<std::endl;
         }
     }
+
+    return 0;
 }
 
 MyTestClientHandler::MyTestClientHandler(Solver<string, string>* solver, CacheManager<string>* cm) {

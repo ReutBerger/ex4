@@ -15,7 +15,7 @@ private:
     CacheManager<string>* cm;
 public:
     MyTestClientHandler(Solver<string, string>* solver, CacheManager<string>* cm);
-    void handleClient(int socket_client) override;
+    int handleClient(int socket_client) override;
 };
 
 

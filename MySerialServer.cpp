@@ -70,8 +70,8 @@ int MySerialServer::openServerFunc(){
     // accepting the clients in serial
     while (1) {
         // accepting a client
-        int client_socket = accept(socketfd, (struct sockaddr *)&address,
-                                   (socklen_t*)&address);
+        int addresslen = sizeof (address);
+        int client_socket = accept(socketfd, (struct sockaddr *)&address, (socklen_t *)&addresslen);
         if (client_socket == -1) {
             cerr << "Error accepting client" << endl;
             return -4;

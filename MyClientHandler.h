@@ -10,13 +10,14 @@
 #include "CacheManager.h"
 #include "Matrix.h"
 
+
 class MyClientHandler : public ClientHandler {
 private:
     Solver<Matrix,string> *m_solver;
     CacheManager<string> *m_cache;
 public:
     MyClientHandler(Solver<Matrix,string> *solver, CacheManager<string> *cache);
-    void handleClient(int socket_client) override;
+    int handleClient(int socket_client) override;
 };
 
 
