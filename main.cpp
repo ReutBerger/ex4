@@ -66,5 +66,6 @@ int main(int argc, char *argv[]) {
     vector<State<Point>*> BFSsearch = searcher->search(m);
     for (auto i :BFSsearch)
         cout << "BFS: (" << i->getState()->getX() << ","<< i->getState()->getY() << ")" << endl;
+    cout << "number of nodes = " << searcher->getNumberOfNodes() << endl;
 }
 #endif //EX4_BOOT_H
