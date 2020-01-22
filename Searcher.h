@@ -12,6 +12,7 @@ template <typename T>
 class Searcher {
 public:
     virtual vector<State<T>*> search(Searchable<T>* problem) = 0;
+    virtual int getNumberOfNodes() = 0;
 };
 
 #endif //EX4_SEARCHER_H

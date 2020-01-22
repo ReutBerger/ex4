@@ -88,6 +88,10 @@ public:
         }
         // TODO: IF PATH NOT FOUND, WHAT SHOULD I RETURN?
     }
+
+    int getNumberOfNodes() override {
+        return this->path.size();
+    }
 };
 
 
