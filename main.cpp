@@ -16,6 +16,7 @@
 #include "StringReverse.h"
 #include "Matrix.h"
 #include "BFS.h"
+#include "BestFS.h"
 
 using namespace std;
 
@@ -51,16 +52,19 @@ int main(int argc, char *argv[]) {
 //   else
 //       cout << 0;
    vector<string> vec = {"1,2,3","-1,5,6","7,8,9","0,0","2,2","end"};
-   Matrix* m = new Matrix(vec);
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < 3; ++j) {
-            cout << "(" << m->matrix[i][j].getState()->getX() << "," << m->matrix[i][j].getState()->getY() <<"," << m->matrix[i][j].getCost() << ")";
-        }
-        cout << endl;
-    }
-    vector<State<Point>*> adj_vec = m->getAllPossibleStates(s);
-    for (auto i : adj_vec)
-        cout << "(" << i->getState()->getX() << ","<< i->getState()->getY() << ")" << endl;
+   Searchable<Point> *m = new Matrix(vec);
+   //BestFS<Point>* test = new BestFS<Point>();
+ //  test->search(m);
+//    for (int i = 0; i < 3; ++i) {
+//        for (int j = 0; j < 3; ++j) {
+//            cout << "(" << m->matrix[i][j].getState()->getX() << "," << m->matrix[i][j].getState()->getY();
+//            cout <<"," << m->matrix[i][j].getCost() << ")";
+//        }
+//        cout << endl;
+//    }
+//    vector<State<Point>> adj_vec = m->getAllPossibleStates(*s);
+//    for (auto i :adj_vec)
+//        cout << "(" << i.getState()->getX() << ","<< i.getState()->getY() << ")" << endl;
 
     Searcher<Point>* searcher = new BFS<Point>();
     vector<State<Point>*> BFSsearch = searcher->search(m);
