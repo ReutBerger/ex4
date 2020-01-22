@@ -9,12 +9,14 @@ class State {
 private:
     T *state;
     double cost;
+    double change_cost;
     State<T> *came_from;
 public:
     State() {}
     State(T *state, double cost) {
         this->state = state;
         this->cost = cost;
+        this->change_cost = 0;
         this->came_from = nullptr;
     }
 
@@ -22,7 +24,6 @@ public:
         return this->state;
     }
 
-//    Maybe *&state1 ??
     bool operator==(State<T> *state1) {
         return this->state == state1->getState();
     }
@@ -37,6 +38,13 @@ public:
 
     void setCameFromState(State<T> *state1) {
         this->came_from = state1;
+    }
+
+    void setChangeCost(double changeCost) {
+        this->change_cost = changeCost;
+    }
+    double getChangeCost() {
+        return this->change_cost;
     }
 
     ~State(){}

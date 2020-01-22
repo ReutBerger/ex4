@@ -17,7 +17,7 @@
 #include "Matrix.h"
 #include "BFS.h"
 #include "BestFS.h"
-
+#include "BestFS.h"
 using namespace std;
 
 namespace boot{
@@ -51,7 +51,12 @@ int main(int argc, char *argv[]) {
 //       cout << 1;
 //   else
 //       cout << 0;
-   vector<string> vec = {"1,2,3","-1,5,6","7,8,9","0,0","2,2","end"};
+   vector<string> vec = { "1,1,1",
+                         "1,-1,1",
+                          "1,1,1",
+                         "0,0",
+                         "1,2",
+                         "end"};
    Searchable<Point> *m = new Matrix(vec);
    //BestFS<Point>* test = new BestFS<Point>();
  //  test->search(m);
@@ -66,9 +71,9 @@ int main(int argc, char *argv[]) {
 //    for (auto i :adj_vec)
 //        cout << "(" << i.getState()->getX() << ","<< i.getState()->getY() << ")" << endl;
 
-    Searcher<Point>* searcher = new BFS<Point>();
-    vector<State<Point>*> BFSsearch = searcher->search(m);
-    for (auto i :BFSsearch)
+    Searcher<Point>* searcher = new BestFS<Point>();
+    vector<State<Point>*> BestFSsearch = searcher->search(m);
+    for (auto i :BestFSsearch)
         cout << "BFS: (" << i->getState()->getX() << ","<< i->getState()->getY() << ")" << endl;
     cout << "number of nodes = " << searcher->getNumberOfNodes() << endl;
 }
