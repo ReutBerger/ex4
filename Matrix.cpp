@@ -6,7 +6,9 @@
 #include <iostream>
 
 // Constructor- build the matrix and update members
-Matrix::Matrix(vector<string> problem) {
+Matrix::Matrix(vector<string> problem1) {
+    // Delete all spaces in the problem
+    vector<string> problem = deleteSpaces(problem1);
     vector<State<Point>> lineVec;
     int i = 0, j = 0, count = 0;
     string line, temp_num = "";
@@ -48,6 +50,7 @@ Matrix::Matrix(vector<string> problem) {
 
     sscanf(problem[problem.size() - 2].c_str(), "%d,%d", &i, &j);
     this->goalPoint = &matrix[i][j];
+    /*TRY*/ cout << goalPoint->getState()->getX() << ","<<  goalPoint->getState()->getY() <<endl;
 }
 
 State<Point>* Matrix::getInitialState() {
@@ -82,4 +85,25 @@ vector<State<Point>*> Matrix::getAllPossibleStates(State<Point> *s) {
     }
 
     return adj_vec;
+}
+
+bool Matrix::isGoalState(State<Point> *state) {
+    return this->goalPoint->getState() == state->getState();
+}
+
+vector<string> Matrix::deleteSpaces(vector<string> vec) {
+    vector<string> new_vec;
+    for (int k = 0; k < vec.size(); ++k) {
+        int l = 0;
+        string temp = vec[k];
+        string new_str = "";
+        while (l < temp.size()){
+            if (temp[l] != ' '){
+                new_str += temp[l];
+            }
+            l++;
+        }
+        new_vec.push_back(new_str);
+    }
+    return new_vec;
 }
