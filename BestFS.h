@@ -130,7 +130,7 @@ public:
             int length = adjs.size();
             for (int i = 0; i < length; ++i) {
                 if ((!isInOpen(adjs[i])) && (!isInClosed(adjs[i]))) {
-                    adjs[i]->setCameFromState(n);
+                    adjs[i]->setCameFromState(closed.back());
                     adjs[i]->setChangeCost(n->getChangeCost() + adjs[i]->getCost());
                     this->open.push(adjs[i]);
                 } else {
@@ -143,8 +143,10 @@ public:
                     }
                 }
             }
-
         }
+        int x;
+        x =5;
+        x +=4;
     }
 };
 

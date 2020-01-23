@@ -23,7 +23,7 @@ Matrix::Matrix(vector<string> problem1) {
                 // Create new state
                 State<Point>* s = new State<Point>(new Point(i,j), stod(temp_num));
                 lineVec.push_back(*s);
-                /*TRY*/ cout << temp_num <<i << j << endl;
+                /*TRY*/// cout << temp_num <<i << j << endl;
                 j++;
                 line.erase(0, count + 1);
                 temp_num = "";
@@ -35,7 +35,7 @@ Matrix::Matrix(vector<string> problem1) {
             // Create new state
             State<Point>* s = new State<Point>(new Point(i,j), stod(temp_num));
             lineVec.push_back(*s);
-            /*TRY*/ cout << temp_num << i << j << endl;
+            /*TRY*/ //cout << temp_num << i << j << endl;
             temp_num = "";
         }
         count = 0;

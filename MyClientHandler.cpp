@@ -5,6 +5,7 @@
 #include "MyClientHandler.h"
 #include <unistd.h>
 #include <netinet/in.h>
+#include <vector>
 
 MyClientHandler::MyClientHandler(Solver<vector<string>, string> *solver, CacheManager<string> *cache) {
     this->m_solver = solver;
@@ -45,9 +46,10 @@ int MyClientHandler::handleClient(int socket_client) {
         solution = this->m_solver->solve(vec_problem);
         this->m_cache->insert(string_problem, solution);
     }
-
-solution = "fake solution until fix of types";
     cout << "solution = " << solution << endl;
+
+//solution = "fake solution until fix of types";
+//    cout << "solution = " << solution << endl;
 
     char *s = &solution[0];
     int is_sent = send(socket_client, s, solution.length(), 0);

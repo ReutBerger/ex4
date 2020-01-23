@@ -23,7 +23,7 @@ public:
 //        mSearcher = searcher;
 //    }
 
-    string solve(vector<string> problem);
+    string solve(vector<string> problem) override;
     string getSolution(vector<State<Point>*> path);
 // TODO - implement.
 
