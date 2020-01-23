@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 
-MyClientHandler::MyClientHandler(Solver<Matrix, string> *solver, CacheManager<string> *cache) {
+MyClientHandler::MyClientHandler(Solver<vector<string>, string> *solver, CacheManager<string> *cache) {
     this->m_solver = solver;
     this->m_cache = cache;
 }
@@ -17,28 +17,34 @@ int MyClientHandler::handleClient(int socket_client) {
 
     // Declare a buffer to get the data
     char buffer[5000] = {0};
-
+    vector<string> vec_problem;
+    string string_problem = "";
     //reading from client
-    int valread = read(socket_client, buffer, sizeof(buffer) - 1);
-    if (valread < 0) {
-        cerr << "read error" << endl;
-        return -1;
+    while (true) {
+        int valread = read(socket_client, buffer, sizeof(buffer) - 1);
+        if (valread < 0) {
+            cerr << "read error" << endl;
+            return -1;
+        }
+
+        buffer[valread] = 0;
+        string problem = string(buffer);
+        cout << "problem: " << problem << endl;
+        vec_problem.push_back(problem);
+        string_problem += problem;
+        if (!problem.compare("end")) {
+            break;
+        }
     }
 
-    buffer[valread] = 0;
-    string problem = string(buffer);
-    cout << "problem: " << problem << endl;
-    if (!problem.compare("end")) {
-        return 0;
-    }
 
     string solution;
-//    if (this->m_cache->find(problem)) {
-//        solution = this->m_cache->get(problem);
-//    } else {
-//        solution = this->m_solver->solve(problem);
-//        this->m_cache->insert(problem, solution);
-//    }
+    if (this->m_cache->find(string_problem)) {
+        solution = this->m_cache->get(string_problem);
+    } else {
+        solution = this->m_solver->solve(vec_problem);
+        this->m_cache->insert(string_problem, solution);
+    }
 
 solution = "fake solution until fix of types";
     cout << "solution = " << solution << endl;

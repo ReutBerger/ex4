@@ -24,7 +24,7 @@ public:
     State<Point>* getGoalState() override;
     bool isGoalState(State<Point>* state) override ;
     vector<State<Point>*> getAllPossibleStates(State<Point> *s) override;
-    //string getSolution(vector<State<Point>*> path);
+   // /*TRY*/string getSolution(vector<State<Point>*> path);
 };
 
 

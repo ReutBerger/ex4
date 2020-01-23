@@ -13,10 +13,10 @@
 
 class MyClientHandler : public ClientHandler {
 private:
-    Solver<Matrix,string> *m_solver;
+    Solver<vector<string>,string> *m_solver;
     CacheManager<string> *m_cache;
 public:
-    MyClientHandler(Solver<Matrix,string> *solver, CacheManager<string> *cache);
+    MyClientHandler(Solver<vector<string>,string> *solver, CacheManager<string> *cache);
     int handleClient(int socket_client) override;
 };
 
