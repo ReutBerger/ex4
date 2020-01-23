@@ -48,12 +48,14 @@ int MyParallelServer::openServerFunc() {
     //the actual bind command
     if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
         cerr << "Could not bind the socket to an IP" << endl;
+        close(socketfd);
         return -2;
     }
 
     //making socket listen to the port
     if (listen(socketfd, 12) == -1) { //can also set to SOMAXCON (max connections)
         cerr << "Error during listening command" << endl;
+        close(socketfd);
         return -3;
     }
     cout << "Server is now listening ..." << endl;
@@ -108,6 +110,7 @@ int MyParallelServer::openServerFunc() {
     }
 
     // Close all client sockets (list / vector)
+    // TODO:
 
     return 0;
 }

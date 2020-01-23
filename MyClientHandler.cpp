@@ -29,7 +29,7 @@ int MyClientHandler::handleClient(int socket_client) {
     string problem = string(buffer);
     cout << "problem: " << problem << endl;
     if (!problem.compare("end")) {
-        return -2;
+        return 0;
     }
 
     string solution;

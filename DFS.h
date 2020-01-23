@@ -1,13 +1,13 @@
 //
-// Created by eden on 19/01/2020.
+// Created by eden on 23/01/2020.
 //
 
-#ifndef EX4_BFS_H
-#define EX4_BFS_H
+#ifndef EX4_DFS_H
+#define EX4_DFS_H
 
 #include <iostream>
 #include <list>
-#include <queue>
+#include <stack>
 
 #include "Searcher.h"
 #include "State.h"
@@ -16,9 +16,9 @@ using namespace std;
 
 template <class T>
 
-class BFS : public Searcher<T> {
+class DFS : public Searcher<T> {
 private:
-    queue<State<T> *> nodesQueue;
+    stack<State<T>* > stateStack;
     vector<State<T>*> visitedNodes;
     vector<State<T>*> path;
     int numOfVisitedNodes = 0;
@@ -26,21 +26,21 @@ private:
 
 public:
     // Constructor
-    BFS() {
+    DFS() {
 
     }
 
     vector<State<T>*> search(Searchable<T>* searchable) override {
         // Initialize operators
         State<T>* initialState = searchable->getInitialState();
-        nodesQueue.push(initialState);
+        stateStack.push(initialState);
         visitedNodes.push_back(initialState);
 
-        // Go over all state queue until you get to the goal state, and return the path
-        while (!nodesQueue.empty()) {
+        // Go over all state stack until you get to the goal state, and return the path
+        while (!stateStack.empty()) {
             // Dequeue a state from queue
-            State<T> *currentState = nodesQueue.front();
-            nodesQueue.pop();
+            State<T> *currentState = stateStack.top();
+            stateStack.pop();
 
             // Update the number of node we visited in this problem by 1.
             this->numOfVisitedNodes += 1;
@@ -78,8 +78,7 @@ public:
                         // Mark the current node dad as the current node
                         adj->setCameFromState(currentState);
                         visitedNodes.push_back(adj);
-//                        visitedNodes.emplace_back(adj);
-                        nodesQueue.push(adj);
+                        stateStack.push(adj);
                     }
                 }
             }
@@ -93,4 +92,4 @@ public:
 };
 
 
-#endif //EX4_BFS_H
+#endif //EX4_DFS_H
