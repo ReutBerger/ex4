@@ -15,10 +15,13 @@ using namespace std;
 
 class FileCacheManager : public CacheManager<string> {
 private:
+    hash<string> hashStr;
     int mCapacity;
+    string hashKey;
     unordered_map<string, typename std::pair<string, list<string>::iterator>> mCache;
     list<string> mObjectsList;
 
+    string makeStrHash(string& key);
     void cacheInsert(string& key, string& obj);
     void fileInsert(string& key, string& obj);
 
