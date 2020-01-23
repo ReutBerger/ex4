@@ -43,6 +43,7 @@ public:
     void setChangeCost(double changeCost) {
         this->change_cost = changeCost;
     }
+
     double getChangeCost() {
         return this->change_cost;
     }

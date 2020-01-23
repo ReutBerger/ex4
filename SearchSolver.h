@@ -8,12 +8,18 @@
 #include "Solver.h"
 #include <string>
 #include <vector>
+#include "State.h"
+#include "Point.h"
 
 using namespace std;
 
 class SearchSolver : public Solver<vector<string>, string> {
+private:
+
 public:
     string solve(vector<string> problem);
+    string getSolution(vector<State<Point>*> path);
+
 };
 
 
