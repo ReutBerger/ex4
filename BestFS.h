@@ -37,14 +37,28 @@ public:
     }
 
     bool isInOpen(State<T>* state) {
+        priority_queue<State<T>*, vector<State<T>*>, Comperator> tmp;
         int length = this->open.size();
         State<T>* temp;
         while (!this->open.empty()) {
             temp = this->open.top();
             if (temp->operator==(state)) {
+                while (!this->open.empty()) {
+                    tmp.push(open.top());
+                    open.pop();
+                }
+                while (!tmp.empty()) {
+                    open.push(tmp.top());
+                    tmp.pop();
+                }
                 return true;
             }
             this->open.pop();
+            tmp.push(temp);
+        }
+        while (!tmp.empty()) {
+            open.push(tmp.top());
+            tmp.pop();
         }
         return false;
     }
@@ -71,14 +85,25 @@ public:
     }
 
     double costInOpen(State<T>* state) {
+        priority_queue<State<T>*, vector<State<T>*>, Comperator> tmp;
         int length = this->open.size();
         State<T>* temp;
         while (!this->open.empty()) {
             temp = this->open.top();
             if (temp->operator==(state)) {
-                return temp->getChangeCost();
+                double cost = temp->getChangeCost();
+                while (!this->open.empty()) {
+                    tmp.push(this->open.top());
+                    open.pop();
+                }
+                while (!tmp.empty()) {
+                    open.push(tmp.top());
+                    tmp.pop();
+                }
+                return cost;
             }
             this->open.pop();
+            tmp.push(temp);
         }
         // for compiler
         return 0;
@@ -129,24 +154,26 @@ public:
             vector<State<T>*> adjs = problem->getAllPossibleStates(n);
             int length = adjs.size();
             for (int i = 0; i < length; ++i) {
+
                 if ((!isInOpen(adjs[i])) && (!isInClosed(adjs[i]))) {
                     adjs[i]->setCameFromState(closed.back());
                     adjs[i]->setChangeCost(n->getChangeCost() + adjs[i]->getCost());
                     this->open.push(adjs[i]);
                 } else {
                     if (isInClosed(adjs[i]) && (adjs[i]->getChangeCost() < costInClosed(adjs[i]))) {
+                        adjs[i]->setCameFromState(closed.back());
+                        adjs[i]->setChangeCost(n->getChangeCost() + adjs[i]->getCost());
                         this->open.push(adjs[i]);
                         removeFromClosed(adjs[i]);
                     } else if (isInOpen(adjs[i]) && (adjs[i]->getChangeCost() < costInOpen(adjs[i]))) {
+                        adjs[i]->setCameFromState(closed.back());
+                        adjs[i]->setChangeCost(n->getChangeCost() + adjs[i]->getCost());
                         this->open = removeFromOpen(adjs[i]);
                         this->open.push(adjs[i]);
                     }
                 }
             }
         }
-        int x;
-        x =5;
-        x +=4;
     }
 };
 
