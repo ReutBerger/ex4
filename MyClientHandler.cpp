@@ -6,57 +6,67 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <vector>
+#include <cstring>
 
 MyClientHandler::MyClientHandler(Solver<vector<string>, string> *solver, CacheManager<string> *cache) {
     this->m_solver = solver;
     this->m_cache = cache;
 }
 
-//TODO: implement this.
 int MyClientHandler::handleClient(int socket_client) {
-    cout << "in My client handler, socket = " << socket_client << endl;
+    // Retrieve the matrix for this client
+    if (m_data_map.find(socket_client) == m_data_map.end()) {
+        cerr << "Data container not found for socket " << socket_client << endl;
+        return -4;
+    }
+    vector<string>& vec_problem = m_data_map[socket_client];
 
-    // Declare a buffer to get the data
-    char buffer[5000] = {0};
-    vector<string> vec_problem;
-    string string_problem = "";
     //reading from client
-    while (true) {
-        int valread = read(socket_client, buffer, sizeof(buffer) - 1);
-        if (valread < 0) {
-            cerr << "read error" << endl;
-            return -1;
+    char buffer[5000];
+    int valread = read(socket_client, buffer, sizeof(buffer) - 1);
+    if (valread < 0) {
+        cerr << "read error" << endl;
+        return -1;
+    }
+    buffer[valread] = 0;
+
+    cout << "sock:" << socket_client << ", line: " << buffer << endl;
+
+    // Add the new line to the matrix
+    vec_problem.push_back((string)buffer);
+
+    // When we get the last line, find a solution and send back to client
+    if (!strcmp(buffer, "end")) {
+        string string_problem = "";
+        for (string s : vec_problem) {
+            string_problem += s;
+        }
+        cout << "problem: " << string_problem << endl;
+
+        // Get some solution
+        string solution;
+        if (this->m_cache->find(string_problem)) {
+            solution = this->m_cache->get(string_problem);
+        } else {
+            solution = this->m_solver->solve(vec_problem);
+            this->m_cache->insert(string_problem, solution);
+        }
+        cout << "solution = " << solution << endl;
+
+        // Send the solution to the client
+        int is_sent = send(socket_client, solution.c_str(), solution.length(), 0);
+        if (is_sent == -1) {
+            cerr << "Could not send message" << endl;
+            return -3;
         }
 
-        buffer[valread] = 0;
-        string problem = string(buffer);
-        cout << "problem: " << problem << endl;
-        vec_problem.push_back(problem);
-        string_problem += problem;
-        if (!problem.compare("end")) {
-            break;
-        }
+        return 0;
     }
 
+    return 1;
+}
 
-    string solution;
-    if (this->m_cache->find(string_problem)) {
-        solution = this->m_cache->get(string_problem);
-    } else {
-        solution = this->m_solver->solve(vec_problem);
-        this->m_cache->insert(string_problem, solution);
-    }
-    cout << "solution = " << solution << endl;
-
-//solution = "fake solution until fix of types";
-//    cout << "solution = " << solution << endl;
-
-    char *s = &solution[0];
-    int is_sent = send(socket_client, s, solution.length(), 0);
-    if (is_sent == -1) {
-        cerr << "Could not send message" << endl;
-        return -3;
-    }
-
-    return 0;
+void MyClientHandler::setupClient(int socket_client) {
+    vector<string> vec_problem;
+    m_data_map[socket_client] = vec_problem;
 }

@@ -21,8 +21,7 @@ private:
     queue<State<T> *> nodesQueue;
     vector<State<T>*> visitedNodes;
     vector<State<T>*> path;
-    int numOfVisitedNodes = 0;
-    double PathCost;
+    double totalCost = 0;
 
 public:
     // Constructor
@@ -42,22 +41,19 @@ public:
             State<T> *currentState = nodesQueue.front();
             nodesQueue.pop();
 
-            // Update the number of node we visited in this problem by 1.
-            this->numOfVisitedNodes += 1;
-
             // If we got to the goal state, return the path
             if (searchable->getGoalState()->operator==(currentState)) {
-                // Update the path Cost
-                this->PathCost += currentState->getCost();
                 path.insert(path.begin(), currentState);
 
                 while (!currentState->operator==(initialState)) {
                     // In order to find the path, get the previous state
                     currentState = currentState->getCameFromState();
-
-                    // Update the path Cost
-                    this->PathCost += currentState->getCost();
                     path.insert(path.begin(), currentState);
+                }
+                // Update the path Cost
+                for (State<T>* s : path) {
+                    totalCost += s->getCost();
+                    s->setChangeCost(totalCost);
                 }
                 return path;
             } else {
@@ -78,13 +74,13 @@ public:
                         // Mark the current node dad as the current node
                         adj->setCameFromState(currentState);
                         visitedNodes.push_back(adj);
-//                        visitedNodes.emplace_back(adj);
                         nodesQueue.push(adj);
                     }
                 }
             }
         }
         // TODO: IF PATH NOT FOUND, WHAT SHOULD I RETURN?
+        cout << "BFS: No path found" << endl;
     }
 
     int getNumberOfNodes() override {

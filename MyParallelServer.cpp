@@ -25,7 +25,7 @@ void MyParallelServer::open(int port, ClientHandler *c) {
 
 int MyParallelServer::openServerFunc() {
     int rc;
-    fd_set rfds;
+    fd_set rfds, active_rfds;
     struct sockaddr_in clientname;
 
     //create socket
@@ -45,6 +45,10 @@ int MyParallelServer::openServerFunc() {
     //we need to convert our number
     // to a number that the network understands.
 
+    int enable = 1;
+    setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(enable));
+    setsockopt(socketfd, SOL_SOCKET, SO_REUSEPORT, &enable, sizeof(enable));
+
     //the actual bind command
     if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
         cerr << "Could not bind the socket to an IP" << endl;
@@ -60,17 +64,21 @@ int MyParallelServer::openServerFunc() {
     }
     cout << "Server is now listening ..." << endl;
 
-    // Time-out is set for 2 minutes
-    struct timeval tv = {0};
-    tv.tv_sec = 120;
+//    // Time-out is set for 2 minutes
+//    struct timeval tv = {0};
+//    tv.tv_sec = 120;
 
     /* Initialize the set of active sockets. */
-    FD_ZERO (&rfds);
-    FD_SET (socketfd, &rfds);
+    FD_ZERO (&active_rfds);
+    FD_SET (socketfd, &active_rfds);
 
     while (1)
     {
+        // Time-out is set for 2 minutes
+        struct timeval tv = {120, 0};
+
         /* Block until input arrives on one or more active sockets. */
+        rfds = active_rfds;
         rc = select (FD_SETSIZE, &rfds, NULL, NULL, &tv);
         if (rc < 0) {
             perror ("select");
@@ -96,12 +104,14 @@ int MyParallelServer::openServerFunc() {
                         cout << "Parallel Server: connect from host " << inet_ntoa(clientname.sin_addr)
                              << "port " << ntohs(clientname.sin_port) << "." << endl;
 
-                        FD_SET (newsock, &rfds);
+                        m_ch->setupClient(newsock);
+
+                        FD_SET (newsock, &active_rfds);
                     } else {
                         /* Data arriving on an already-connected socket. */
-                        if (m_ch->handleClient(i) < 0) {
+                        if (m_ch->handleClient(i) <= 0) {
                             close(i);
-                            FD_CLR (i, &rfds);
+                            FD_CLR (i, &active_rfds);
                         }
                     }
                 }
