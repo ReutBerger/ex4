@@ -17,7 +17,9 @@
 #include "Matrix.h"
 #include "BFS.h"
 #include "BestFS.h"
+#include "SearchSolver.h"
 #include "BestFS.h"
+#include "Solver.h"
 using namespace std;
 
 namespace boot{
@@ -53,9 +55,9 @@ int main(int argc, char *argv[]) {
 //       cout << 0;
    vector<string> vec = { "1,1,1",
                          "1,-1,1",
-                          "1,1,1",
+                          "0,1,1",
                          "0,0",
-                         "1,2",
+                         "2,2",
                          "end"};
    Searchable<Point> *m = new Matrix(vec);
    //BestFS<Point>* test = new BestFS<Point>();
@@ -72,9 +74,14 @@ int main(int argc, char *argv[]) {
 //        cout << "(" << i.getState()->getX() << ","<< i.getState()->getY() << ")" << endl;
 
     Searcher<Point>* searcher = new BestFS<Point>();
-    vector<State<Point>*> BestFSsearch = searcher->search(m);
-    for (auto i :BestFSsearch)
+    vector<State<Point>*> bestFSsearch = searcher->search(m);
+    for (auto i :bestFSsearch)
         cout << "BFS: (" << i->getState()->getX() << ","<< i->getState()->getY() << ")" << endl;
     cout << "number of nodes = " << searcher->getNumberOfNodes() << endl;
+
+
+    Searcher<Point> * bestFS = new BestFS<Point>();
+    SearchSolver * solv = new SearchSolver();
+    cout<< solv->getSolution(bestFSsearch) << endl;
 }
 #endif //EX4_BOOT_H

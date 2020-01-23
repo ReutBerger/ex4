@@ -9,6 +9,7 @@
 Matrix::Matrix(vector<string> problem1) {
     // Delete all spaces in the problem
     vector<string> problem = deleteSpaces(problem1);
+
     vector<State<Point>> lineVec;
     int i = 0, j = 0, count = 0;
     string line, temp_num = "";
@@ -50,7 +51,6 @@ Matrix::Matrix(vector<string> problem1) {
 
     sscanf(problem[problem.size() - 2].c_str(), "%d,%d", &i, &j);
     this->goalPoint = &matrix[i][j];
-    /*TRY*/ cout << goalPoint->getState()->getX() << ","<<  goalPoint->getState()->getY() <<endl;
 }
 
 State<Point>* Matrix::getInitialState() {
@@ -107,3 +107,4 @@ vector<string> Matrix::deleteSpaces(vector<string> vec) {
     }
     return new_vec;
 }
+
