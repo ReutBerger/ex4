@@ -174,6 +174,8 @@ public:
                 }
             }
         }
+        // the case that we cant arrive to the goal state
+        return this->path;
     }
 };
 

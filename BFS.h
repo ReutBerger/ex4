@@ -79,8 +79,8 @@ public:
                 }
             }
         }
-        // TODO: IF PATH NOT FOUND, WHAT SHOULD I RETURN?
-        cout << "BFS: No path found" << endl;
+        // The case that no path found
+        return this->path;
     }
 
     int getNumberOfNodes() override {
