@@ -174,7 +174,7 @@ public:
                 }
             }
         }
-        // the case that we cant arrive to the goal state
+        // The case that no path found
         return this->path;
     }
 };
