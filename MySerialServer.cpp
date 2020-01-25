@@ -40,6 +40,10 @@ int MySerialServer::openServerFunc(){
         return -1;
     }
 
+    // Time-out is set for 2 minutes
+    struct timeval tv = {120, 0};
+    setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof(tv));
+
     //bind socket to IP address
     // we first need to create the sockaddr obj.
     sockaddr_in address; //in means IP4
@@ -49,11 +53,6 @@ int MySerialServer::openServerFunc(){
     //we need to convert our number
     // to a number that the network understands.
 
-    // Time-out is set for 2 minutes
-    struct timeval tv;
-    tv.tv_sec = 120;
-    setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof(tv));
-
     //the actual bind command
     if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
         cerr << "Could not bind the socket to an IP" << endl;
@@ -61,7 +60,7 @@ int MySerialServer::openServerFunc(){
     }
 
     //making socket listen to the port
-    if (listen(socketfd, 5) == -1) { //can also set to SOMAXCON (max connections)
+    if (listen(socketfd, 1) == -1) { //can also set to SOMAXCON (max connections)
         cerr << "Error during listening command" << endl;
         return -3;
     }

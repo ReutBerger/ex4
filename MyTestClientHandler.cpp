@@ -2,9 +2,9 @@
 // Created by reut on 1/12/20.
 //
 
-#include "MyTestClientHandler.h"
 #include <unistd.h>
 #include <netinet/in.h>
+#include "MyTestClientHandler.h"
 
 int MyTestClientHandler::handleClient(int socket_client){
     cout << "in My Test handle client" << endl;
@@ -21,10 +21,10 @@ int MyTestClientHandler::handleClient(int socket_client){
             cerr << "read error" << endl;
             break;
         }
-
         buffer[valread] = 0;
+
         string problem = string(buffer);
-        cout << "problem: " << problem << endl;
+        cout << "problem: (" << valread << "), " << problem << endl;
         if (!problem.compare("end")) {
             close(socket_client);
             break;

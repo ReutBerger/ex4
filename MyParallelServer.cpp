@@ -3,6 +3,8 @@
 //
 
 #include "MyParallelServer.h"
+#include <vector>
+#include <list>
 #include <thread>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -24,9 +26,13 @@ void MyParallelServer::open(int port, ClientHandler *c) {
 }
 
 int MyParallelServer::openServerFunc() {
+    list<int> sockestsList;
+    vector<int> sockestsVec;
+    int retVal = 0;
     int rc;
     fd_set rfds, active_rfds;
     struct sockaddr_in clientname;
+
 
     //create socket
     socketfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -64,10 +70,6 @@ int MyParallelServer::openServerFunc() {
     }
     cout << "Server is now listening ..." << endl;
 
-//    // Time-out is set for 2 minutes
-//    struct timeval tv = {0};
-//    tv.tv_sec = 120;
-
     /* Initialize the set of active sockets. */
     FD_ZERO (&active_rfds);
     FD_SET (socketfd, &active_rfds);
@@ -82,10 +84,12 @@ int MyParallelServer::openServerFunc() {
         rc = select (FD_SETSIZE, &rfds, NULL, NULL, &tv);
         if (rc < 0) {
             perror ("select");
-            return -4;
+            retVal = -4;
+            break;
         }
         else if (rc == 0) {
             cout << "timeout" << endl;
+            retVal = -5;
             break;
         }
         else {
@@ -100,6 +104,7 @@ int MyParallelServer::openServerFunc() {
                             cerr << "accept() failure" << endl;
                             continue;
                         }
+                        sockestsVec.push_back(newsock);
 
                         cout << "Parallel Server: connect from host " << inet_ntoa(clientname.sin_addr)
                              << "port " << ntohs(clientname.sin_port) << "." << endl;
@@ -112,17 +117,20 @@ int MyParallelServer::openServerFunc() {
                         if (m_ch->handleClient(i) <= 0) {
                             close(i);
                             FD_CLR (i, &active_rfds);
+                            // TODO: GET I OUT OF sockestsVec
+                            }
                         }
                     }
                 }
             }
         }
+
+    // Close all client sockets
+    for (int sock : sockestsVec) {
+        close(sock);
     }
 
-    // Close all client sockets (list / vector)
-    // TODO:
-
-    return 0;
+    return retVal;
 }
 
 void MyParallelServer::stop() {
