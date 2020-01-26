@@ -1,0 +1,14 @@
+Matrix1:
+Right (24), Right (40), Right (44), Right (61), Right (63), Right (74), Right (89), Right (94), Down (95), Right (97), Down (116), Down (121), Down (123), Down (138), Down (147), Down (160), Down (175), Down (180)
+
+Matrix2:
+Right (33), Right (38), Right (55), Right (60), Right (63), Right (81), Right (89), Right (102), Right (106), Right (106), Right (108), Right (128), Right (128), Right (135), Down (136), Down (152), Down (170), Down (181), Down (200), Down (210), Down (219), Down (234), Down (247), Down (247), Down (248), Down (248), Down (253), Down (260)
+
+Matrix3:
+Right (7), Right (16), Right (33), Right (42), Right (42), Right (62), Right (75), Right (87), Right (94), Right (111), Right (122), Right (127), Right (131), Right (140), Right (158), Right (173), Right (183), Down (199), Right (215), Right (226), Down (241), Down (245), Down (260), Down (262), Down (265), Down (270), Down (283), Down (294), Down (309), Down (316), Down (336), Down (346), Down (363), Down (366), Down (376), Down (377), Down (382), Down (397)
+
+Matrix4:
+Right (29), Right (36), Right (43), Right (46), Right (52), Right (53), Right (71), Right (77), Right (92), Down (108), Right (122), Right (137), Right (145), Down (158), Right (158), Down (178), Right (178), Right (198), Right (203), Right (206), Right (214), Right (230), Right (242), Right (250), Right (252), Down (252), Right (264), Right (271), Down (283), Down (289), Down (291), Down (306), Down (321), Down (328), Down (332), Down (334), Down (348), Down (356), Down (356), Down (365), Down (382), Down (388), Down (398), Down (408), Down (410), Down (414), Down (414), Down (417)
+
+Matrix5:
+Right (15), Right (24), Right (42), Right (50), Right (57), Right (69), Right (79), Right (99), Right (114), Right (114), Right (126), Right (126), Right (130), Right (130), Right (139), Right (142), Right (143), Right (156), Right (163), Right (179), Right (182), Right (189), Right (208), Right (211), Right (231), Right (248), Right (261), Right (271), Right (286), Down (290), Down (304), Down (322), Down (329), Down (331), Down (337), Down (352), Down (364), Down (372), Down (377), Down (385), Down (391), Down (402), Down (412), Down (423), Down (428), Down (445), Down (451), Down (458), Down (469), Down (480), Down (484), Down (486), Down (505), Down (517), Down (520), Down (531), Down (532), Down (539)

@@ -1,0 +1,15 @@
+Matrix1:
+Down (15), Down (17), Down (22), Down (26), Down (30), Down (40), Down (55), Down (68), Right (70), Down (82), Right (87), Right (88), Right (93), Right (102), Right (120), Right (131), Up (138), Right (157), Right (172), Down (177)
+
+Matrix2:
+Down (32), Down (44), Down (57), Down (60), Down (80), Down (90), Down (92), Down (107), Down (120), Down (126), Down (132), Right (135), Down (154), Down (156), Down (161), Right (169), Right (183), Right (199), Right (206), Right (215), Right (221), Right (240), Right (252), Right (257), Right (271), Right (277), Right (295), Right (302)
+
+Matrix3:
+Down (23), Down (31), Down (35), Down (38), Down (39), Down (58), Down (63), Down (67), Down (77), Down (88), Down (103), Down (121), Down (141), Down (154), Down (165), Down (183), Down (184), Down (197), Down (209), Right (219), Right (238), Right (256), Right (276), Right (282), Right (294), Right (299), Right (305), Right (305), Right (318), Right (338), Right (339), Right (343), Right (358), Right (363), Right (366), Right (367), Right (382), Right (397)
+
+Matrix4:
+Down (20), Down (25), Down (31), Down (35), Down (45), Down (55), Down (69), Down (74), Down (85), Down (97), Down (99), Down (117), Down (133), Down (148), Down (155), Down (173), Down (174), Down (184), Down (200), Right (220), Down (234), Down (239), Down (242), Down (259), Right (263), Right (277), Right (294), Down (312), Right (330), Right (339), Right (358), Right (372), Right (387), Right (398), Right (402), Right (412), Right (427), Right (439), Right (442), Right (444), Right (463), Right (482), Right (502), Right (507), Right (524), Right (529), Right (537), Right (540)
+
+Matrix5:
+Down (14), Down (19), Down (31), Down (49), Down (52), Down (63), Down (71), Down (73), Right (73), Down (86), Down (88), Down (93), Down (110), Down (115), Down (115), Down (120), Down (127), Down (147), Down (158), Down (173), Down (188), Down (204), Down (219), Down (229), Down (236), Down (236), Down (238), Down (248), Down (254), Down (258), Right (275), Right (291), Right (309), Right (324), Right (341), Right (349), Right (369), Up (381), Right (382), Right (400), Right (410), Down (414), Right (417), Right (433), Right (451), Right (459), Right (467), Right (479), Right (487), Right (502), Right (518), Right (534), Right (548), Up (551), Right (564), Right (581), Down (584), Right (596), Right (615), Right (625), Up (645), Right (657), Right (658), Down (665)
+
