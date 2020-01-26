@@ -27,14 +27,14 @@ void MySerialServer::open(int port, ClientHandler* c) {
 
 void MySerialServer::stop(){
     //closing the listening socket
-    close(socketfd);
+    close(this->socketfd);
 }
 
 int MySerialServer::openServerFunc(){
 
     //create socket
-    socketfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (socketfd == -1) {
+    this->socketfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (this->socketfd == -1) {
         //error
         cerr << "Could not create a socket"<<std::endl;
         return -1;
@@ -42,7 +42,7 @@ int MySerialServer::openServerFunc(){
 
     // Time-out is set for 2 minutes
     struct timeval tv = {120, 0};
-    setsockopt(socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof(tv));
+    setsockopt(this->socketfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&tv, sizeof(tv));
 
     //bind socket to IP address
     // we first need to create the sockaddr obj.
@@ -54,23 +54,23 @@ int MySerialServer::openServerFunc(){
     // to a number that the network understands.
 
     //the actual bind command
-    if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
+    if (bind(this->socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
         cerr << "Could not bind the socket to an IP" << endl;
         return -2;
     }
 
     //making socket listen to the port
-    if (listen(socketfd, 1) == -1) { //can also set to SOMAXCON (max connections)
+    if (listen(this->socketfd, 1) == -1) { //can also set to SOMAXCON (max connections)
         cerr << "Error during listening command" << endl;
         return -3;
     }
     cout << "Server is now listening ..." << endl;
 
     // accepting the clients in serial
-    while (1) {
+    while (true) {
         // accepting a client
         int addresslen = sizeof (address);
-        int client_socket = accept(socketfd, (struct sockaddr *)&address, (socklen_t *)&addresslen);
+        int client_socket = accept(this->socketfd, (struct sockaddr *)&address, (socklen_t *)&addresslen);
         if (client_socket == -1) {
             cerr << "Error accepting client" << endl;
             return -4;

@@ -21,5 +21,4 @@ public:
     int openServerFunc() override ;
 };
 
-
 #endif //EX4_MYSERIALSERVER_H
