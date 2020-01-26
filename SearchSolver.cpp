@@ -20,7 +20,7 @@ string SearchSolver::solve(vector<string> problem) {
     /*TRY*///Searcher<Point> * dFS = new DFS<Point>();
    /*TRY*/// Searcher<Point> * aStar = new AStar<Point>();
 
-    /*TRY*/ cout<< "solution = " << solution;
+    ///*TRY*/ cout<< "solution = " << solution;
     // return the string of ths best solution
     solution = getSolution(this->mSearcher->search(matrix));
     return solution;

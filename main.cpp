@@ -110,12 +110,23 @@ int main(int argc, char *argv[]) {
 //   Searchable<Point> *m = new Matrix(vec);
 ////   BestFS<Point>* test = new BestFS<Point>();
 ////   test->search(m);
-//
+    Searcher<Point> * bestFS = new BestFS<Point>();
+    Searcher<Point> * bFS = new BFS<Point>();
+    Searcher<Point> * dFS = new DFS<Point>();
     Searcher<Point> * aStar = new AStar<Point>();
-    SearchSolver * solver = new SearchSolver(aStar);
+    SearchSolver * solver1 = new SearchSolver(aStar);
+    SearchSolver * solver2 = new SearchSolver(bestFS);
+    SearchSolver * solver3 = new SearchSolver(bFS);
+    SearchSolver * solver4 = new SearchSolver(dFS);
 //
-   string solu = solver->solve(vec);
-  cout << solu<<endl;
+   string solu1 = solver1->solve(vec);
+    string solu2 = solver2->solve(vec);
+    string solu3 = solver3->solve(vec);
+    string solu4 = solver4->solve(vec);
+  cout << "A Star :" << solu1 << endl;
+    cout << "BesFs :" << solu2 << endl;
+    cout << "BFS :" << solu3 << endl;
+    cout << "DFS :" << solu4 << endl;
 //    for (int i = 0; i < 3; ++i) {
 //        for (int j = 0; j < 3; ++j) {
 //
