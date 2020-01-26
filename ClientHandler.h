@@ -6,6 +6,7 @@
 #define EX4_CLIENTHANDLER_H
 
 #include <iostream>
+
 using namespace std;
 
 class ClientHandler {
@@ -13,6 +14,5 @@ public:
     virtual int handleClient(int socket_client) = 0;
     virtual void setupClient(int socket_client) {}
 };
-
 
 #endif //EX4_CLIENTHANDLER_H

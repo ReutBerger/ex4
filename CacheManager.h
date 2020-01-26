@@ -18,4 +18,5 @@ public:
     virtual T get(string& key) = 0;
 
 };
+
 #endif //EX4_CACHEMANAGER_H

@@ -22,7 +22,10 @@ string SearchSolver::solve(vector<string> problem) {
 
     ///*TRY*/ cout<< "solution = " << solution;
     // return the string of ths best solution
+
     solution = getSolution(this->mSearcher->search(matrix));
+    //int num = this->mSearcher->getNumberOfNodes();
+    //cout << num << endl;
     return solution;
 }
 

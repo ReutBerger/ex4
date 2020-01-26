@@ -5,11 +5,10 @@
 #ifndef EX4_FILECACHEMANAGER_H
 #define EX4_FILECACHEMANAGER_H
 
-#include "CacheManager.h"
-
 #include <iostream>
 #include <unordered_map>
 #include <list>
+#include "CacheManager.h"
 
 using namespace std;
 

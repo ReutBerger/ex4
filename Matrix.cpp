@@ -3,17 +3,20 @@
 //
 
 #include "Matrix.h"
-#include <iostream>
 
 // Constructor- build the matrix and update members
 Matrix::Matrix(vector<string> problem1) {
-    // Delete all spaces in the problem
+    // Delete all spaces in the given problem
     vector<string> problem = deleteSpaces(problem1);
 
     vector<State<Point>> lineVec;
-    int i = 0, j = 0, count = 0, counter = 0;
+    int i = 0, j = 0, index = 0, counter = 0;
     string line, temp_num = "";
+
+    // Initializes the length of the matrix rows
     this->row = problem.size() - 3;
+
+    // Initializes the length of the matrix cols
     for (int k = 0; k < problem[0].size(); ++k) {
         if (problem[0][k] == ',') {
                counter++;
@@ -21,41 +24,40 @@ Matrix::Matrix(vector<string> problem1) {
     }
     counter++;
     this->col = counter;
-    while (i < row) {
+
+    while (i < this->row) {
         line = problem[i];
-        while (line[count] != '\0') {
-            temp_num += line[count];
-            if (line[count] == ',') {
-                temp_num = temp_num.substr(0,count);
+        while (line[index] != '\0') {
+            temp_num += line[index];
+            if (line[index] == ',') {
+                temp_num = temp_num.substr(0, index);
                 // Create new state
                 State<Point>* s = new State<Point>(new Point(i,j), stod(temp_num));
                 lineVec.push_back(*s);
-                /*TRY*/// cout << temp_num <<i << j << endl;
                 j++;
-                line.erase(0, count + 1);
+                line.erase(0, index + 1);
                 temp_num = "";
-                count = -1;
+                index = -1;
             }
-            count++;
+            index++;
         }
         if(temp_num != "") {
             // Create new state
             State<Point>* s = new State<Point>(new Point(i,j), stod(temp_num));
             lineVec.push_back(*s);
-            /*TRY*/ //cout << temp_num << i << j << endl;
             temp_num = "";
         }
-        count = 0;
+        index = 0;
         j = 0;
         i++;
-        matrix.push_back(lineVec);
+        this->matrix.push_back(lineVec);
         lineVec.clear();
     }
 
-    // Initialize members
+    // Initializes the initial point
     sscanf(problem[problem.size() - 3].c_str(), "%d,%d", &i, &j);
     this->startPoint = &matrix[i][j];
-
+    // Initializes the goal point
     sscanf(problem[problem.size() - 2].c_str(), "%d,%d", &i, &j);
     this->goalPoint = &matrix[i][j];
 }
@@ -68,6 +70,7 @@ State<Point>* Matrix::getGoalState() {
     return this->goalPoint;
 }
 
+// Returns the all neighbors of given state
 vector<State<Point>*> Matrix::getAllPossibleStates(State<Point> *s) {
     vector<State<Point>*> adj_vec;
     int x = s->getState()->getX();

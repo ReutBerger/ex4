@@ -22,7 +22,7 @@ int MyClientHandler::handleClient(int socket_client) {
     vector<string>& vec_problem = m_data_map[socket_client];
 
     //reading from client
-    char buffer[5000];
+    char buffer[5120];
     int valread = read(socket_client, buffer, sizeof(buffer) - 1);
     if (valread < 0) {
         cerr << "read error" << endl;

@@ -2,9 +2,9 @@
 // Created by eden on 12/01/2020.
 //
 
-#include "FileCacheManager.h"
 #include <stdio.h>
 #include <fstream>
+#include "FileCacheManager.h"
 
 // Constructor
 FileCacheManager::FileCacheManager(int capacity) {
@@ -50,7 +50,8 @@ bool FileCacheManager::find(string& key) {
 
 string FileCacheManager::get(string& key) {
     ifstream file_obj;
-    string obj = "";
+    string obj;
+    obj = "";
     hashKey = makeStrHash(key);
 
     // Search in cache
@@ -63,12 +64,13 @@ string FileCacheManager::get(string& key) {
     // Not found in cache, search in file
     // Opening file in input mode
     file_obj.open("Matrix" + hashKey + ".txt", ios::in|ios::binary);
+
     // File not found, throw an exception
     if (!file_obj)
         throw "key not found";
     getline(file_obj, obj);
-//    file_obj.read((char*)&obj, sizeof(obj));
     file_obj.close();
+
     // Add object to cache
     cacheInsert(hashKey, obj);
     return obj;
@@ -105,7 +107,6 @@ void FileCacheManager::fileInsert(string& hashKey, string& obj) {
         throw "Failed in creating file";
 
     // Writing the object's data in file
-//    file_obj.write((char*)&obj, sizeof(obj));
     file_obj << obj << endl;
 
     file_obj.close();
