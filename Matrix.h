@@ -29,5 +29,4 @@ public:
     double calculateHeuristic(State<Point>* current, State<Point>* goal) override ;
 };
 
-
 #endif //EX4_MATRIX_H

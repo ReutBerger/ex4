@@ -12,7 +12,6 @@
 #include "CacheManager.h"
 #include "Matrix.h"
 
-
 class MyClientHandler : public ClientHandler {
 private:
     unordered_map<int, vector<string>> m_data_map;
@@ -23,7 +22,5 @@ public:
     int handleClient(int socket_client) override;
     void setupClient(int socket_client) override;
 };
-
-
 
 #endif //EX4_MYCLIENTHANDLER_H
