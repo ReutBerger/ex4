@@ -15,7 +15,7 @@ class AStar : public Searcher<T> {
     class Comperator{
     public:
         bool operator()(State<T>* left, State<T>* right) {
-            return (left->getChangeCost() + left->getHeuristic() > right->getChangeCost() + right->getHeuristic());
+            return (left->getF() > right->getF());
         }
     };
 
@@ -71,6 +71,45 @@ public:
         }
         return false;
     }
+
+        vector<State<T>*> search(Searchable<T> *problem) override {
+            // initialization to the initial state
+            State<T> *start = problem->getInitialState();
+            start->setChangeCost(start->getCost());
+            start->setF((problem->calculateHeuristic(start, problem->getGoalState())) + start->getCost());
+            this->open.push(problem->getInitialState());
+
+            while (!open.empty()) {
+                State<T> *current = open.top();
+                open.pop();
+                this->closed.push_back(current);
+                if (problem->isGoalState(current)) {
+                    backTrace(problem);
+                    return this->path;
+                }
+                vector<State<T> *> adjs = problem->getAllPossibleStates(current);
+                for (int i = 0; i < adjs.size(); ++i) {
+                    State<T> *neighbor = adjs[i];
+                    //neighbor->setChangeCost();
+                    double tentative_g_score = current->getChangeCost() + neighbor->getCost();
+                    if (isInClosed(neighbor) || (tentative_g_score >= neighbor->getChangeCost() && neighbor->getChangeCost() != 0)) {
+                        continue;
+                    }
+                    if (!isInOpen(neighbor) || tentative_g_score < neighbor->getChangeCost() || neighbor->getChangeCost() == 0 ) {
+                        neighbor->setCameFromState(current);
+                        neighbor->setChangeCost(tentative_g_score);
+                        neighbor->setF(neighbor->getChangeCost() + problem->calculateHeuristic(neighbor, problem->getGoalState()));
+                        if (!isInOpen(neighbor)) {
+                            open.push(neighbor);
+                        }
+                    }
+                }
+            }
+            return path;
+        }
+
+
+
 /*
     double costInClosed(State<T>* state) {
         int length = this->closed.size();
@@ -134,51 +173,53 @@ public:
         return this->path.size();
     }
 
-
-    vector<State<T>*> search(Searchable<T> *problem) override {
-        // initialization to the initial state
-        problem->getInitialState()->setChangeCost(problem->getInitialState()->getCost());
-        problem->getInitialState()->setHeuristic
-                       (problem->calculateHeuristic(problem->getInitialState(),problem->getGoalState()));
-        this->open.push(problem->getInitialState());
-
-        while (!open.empty()) {
-            State<T>* current = open.top();
-            open.pop();
-            this->closed.push_back(current);
-            if (problem->isGoalState(current)) {
-                backTrace(problem);
-               return this->path;
-            }
-            vector<State<T>*> adjs = problem->getAllPossibleStates(current);
-            for (int i = 0; i < adjs.size(); ++i) {
-                double cost;
-                if ((!isInOpen(adjs[i])) && (!isInClosed(adjs[i]))) {
-                    adjs[i]->setCameFromState(current);
-                    adjs[i]->setChangeCost(current->getChangeCost() + adjs[i]->getCost());
-                    cost = problem->calculateHeuristic(adjs[i], problem->getGoalState());
-                    adjs[i]->setHeuristic(cost);
-                    this->open.push(adjs[i]);
-                } else if (isInOpen(adjs[i]) && (adjs[i]->getChangeCost() > current->getChangeCost() + adjs[i]->getCost())) {
-                    //removeFromOpen(adjs[i]);
-                    stack<State<T>*> tempStack;
-                    while (open.top() != adjs[i]) {
-                        tempStack.push(open.top());
-                        open.pop();
-                    }
-                    State<T>* temp = open.top();
-                    open.pop();
-                    temp->setChangeCost(current->getChangeCost() + adjs[i]->getCost());
-                    temp->setCameFromState(current);
-                    cost = problem->calculateHeuristic(adjs[i], problem->getGoalState());
-                    temp->setHeuristic(cost);
-                    open.push(temp);
-                    while (!tempStack.empty()) {
-                        open.push(tempStack.top());
-                        tempStack.pop();
-                    }
-                }
-            }
+//
+//    vector<State<T>*> search(Searchable<T> *problem) override {
+//        // initialization to the initial state
+//        problem->getInitialState()->setChangeCost(problem->getInitialState()->getCost());
+//        problem->getInitialState()->setHeuristic
+//                       (problem->calculateHeuristic(problem->getInitialState(),problem->getGoalState()));
+//        this->open.push(problem->getInitialState());
+//
+//        while (!open.empty()) {
+//            State<T>* current = open.top();
+//            open.pop();
+//            this->closed.push_back(current);
+//            if (problem->isGoalState(current)) {
+//                backTrace(problem);
+//               return this->path;
+//            }
+//            vector<State<T>*> adjs = problem->getAllPossibleStates(current);
+//
+//            for (int i = 0; i < adjs.size(); ++i) {
+//                double cost;
+//                if ((!isInOpen(adjs[i])) && (!isInClosed(adjs[i]))) {
+//                    adjs[i]->setCameFromState(current);
+//                    adjs[i]->setChangeCost(current->getChangeCost() + adjs[i]->getCost());
+//                    cost = problem->calculateHeuristic(adjs[i], problem->getGoalState());
+//                    adjs[i]->setHeuristic(cost);
+//                    this->open.push(adjs[i]);
+//                } else if (isInOpen(adjs[i]) && (adjs[i]->getChangeCost() + adjs[i]->getHeuristic() >
+//                                            current->getChangeCost() + adjs[i]->getCost()) + current->getHeuristic()) {
+//                    //removeFromOpen(adjs[i]);
+//                    stack<State<T>*> tempStack;
+//                    while (open.top() != adjs[i]) {
+//                        tempStack.push(open.top());
+//                        open.pop();
+//                    }
+//                    State<T>* temp = open.top();
+//                    open.pop();
+//                    temp->setChangeCost(current->getChangeCost() + adjs[i]->getCost());
+//                    temp->setCameFromState(current);
+//                    cost = problem->calculateHeuristic(adjs[i], problem->getGoalState());
+//                    temp->setHeuristic(cost);
+//                    open.push(temp);
+//                    while (!tempStack.empty()) {
+//                        open.push(tempStack.top());
+//                        tempStack.pop();
+//                    }
+//                }
+//            }
 //             Wiki
 //            tentative_g_score := g_score[current] + dist_between(current,neighbor)
 //            if neighbor in closedset or tentative_g_score >= g_score[neighbor]
@@ -190,8 +231,8 @@ public:
 //            if neighbor not in openset
 //            add neighbor to openset
 
-        }
-        return this->path;
+//        }
+//        return this->path;
 
 
 //        State<T>* n;
@@ -255,7 +296,6 @@ public:
 //                    }
 //                }
 //        }
-    }
 };
 
 
