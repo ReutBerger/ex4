@@ -5,7 +5,6 @@
 #ifndef EX4_POINT_H
 #define EX4_POINT_H
 
-
 class Point {
 private:
     int m_x;
@@ -18,6 +17,5 @@ public:
     void setY(int y);
     virtual ~Point();
 };
-
 
 #endif //EX4_POINT_H
