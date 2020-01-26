@@ -35,8 +35,8 @@ int MyParallelServer::openServerFunc() {
 
 
     //create socket
-    socketfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (socketfd == -1) {
+    this->socketfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (this->socketfd == -1) {
         //error
         cerr << "Could not create a socket"<<std::endl;
         return -1;
@@ -52,29 +52,29 @@ int MyParallelServer::openServerFunc() {
     // to a number that the network understands.
 
     int enable = 1;
-    setsockopt(socketfd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(enable));
-    setsockopt(socketfd, SOL_SOCKET, SO_REUSEPORT, &enable, sizeof(enable));
+    setsockopt(this->socketfd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(enable));
+    setsockopt(this->socketfd, SOL_SOCKET, SO_REUSEPORT, &enable, sizeof(enable));
 
     //the actual bind command
-    if (bind(socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
+    if (bind(this->socketfd, (struct sockaddr *) &address, sizeof(address)) == -1) {
         cerr << "Could not bind the socket to an IP" << endl;
-        close(socketfd);
+        close(this->socketfd);
         return -2;
     }
 
     //making socket listen to the port
-    if (listen(socketfd, 12) == -1) { //can also set to SOMAXCON (max connections)
+    if (listen(this->socketfd, 12) == -1) { //can also set to SOMAXCON (max connections)
         cerr << "Error during listening command" << endl;
-        close(socketfd);
+        close(this->socketfd);
         return -3;
     }
     cout << "Server is now listening ..." << endl;
 
     /* Initialize the set of active sockets. */
     FD_ZERO (&active_rfds);
-    FD_SET (socketfd, &active_rfds);
+    FD_SET (this->socketfd, &active_rfds);
 
-    while (1)
+    while (true)
     {
         // Time-out is set for 2 minutes
         struct timeval tv = {120, 0};
@@ -96,10 +96,10 @@ int MyParallelServer::openServerFunc() {
             /* Service all the sockets with input pending. */
             for (int i = 0; i < FD_SETSIZE; ++i) {
                 if (FD_ISSET (i, &rfds)) {
-                    if (i == socketfd) {
+                    if (i == this->socketfd) {
                         /* Connection request on original socket. */
                         int size = sizeof(clientname);
-                        int newsock = accept(socketfd, (struct sockaddr *) &clientname, (socklen_t *) &size);
+                        int newsock = accept(this->socketfd, (struct sockaddr *) &clientname, (socklen_t *) &size);
                         if (newsock < 0) {
                             cerr << "accept() failure" << endl;
                             continue;
@@ -109,12 +109,12 @@ int MyParallelServer::openServerFunc() {
                         cout << "Parallel Server: connect from host " << inet_ntoa(clientname.sin_addr)
                              << "port " << ntohs(clientname.sin_port) << "." << endl;
 
-                        m_ch->setupClient(newsock);
+                        this->m_ch->setupClient(newsock);
 
                         FD_SET (newsock, &active_rfds);
                     } else {
                         /* Data arriving on an already-connected socket. */
-                        if (m_ch->handleClient(i) <= 0) {
+                        if (this->m_ch->handleClient(i) <= 0) {
                             close(i);
                             FD_CLR (i, &active_rfds);
                             // TODO: GET I OUT OF sockestsVec
@@ -135,8 +135,8 @@ int MyParallelServer::openServerFunc() {
 
 void MyParallelServer::stop() {
     //closing the listening socket
-    if (socketfd != -1) {
-        close(socketfd);
-        socketfd = -1;
+    if (this->socketfd != -1) {
+        close(this->socketfd);
+        this->socketfd = -1;
     }
 }
