@@ -10,6 +10,7 @@ private:
     T *state;
     double cost;
     double change_cost;
+    double heuristic;
     State<T> *came_from;
 public:
     State() {}
@@ -18,6 +19,7 @@ public:
         this->cost = cost;
         this->change_cost = 0;
         this->came_from = nullptr;
+        this->heuristic = 0;
     }
 
     T* getState() {
@@ -46,6 +48,14 @@ public:
 
     double getChangeCost() {
         return this->change_cost;
+    }
+
+    void setHeuristic(double heuristic1) {
+        this->heuristic = heuristic1;
+    }
+
+    double getHeuristic() {
+        return this->heuristic;
     }
 
     ~State(){}

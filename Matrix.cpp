@@ -97,8 +97,8 @@ vector<string> Matrix::deleteSpaces(vector<string> vec) {
         int l = 0;
         string temp = vec[k];
         string new_str = "";
-        while (l < temp.size()){
-            if (temp[l] != ' '){
+        while (l < temp.size()) {
+            if (temp[l] != ' ') {
                 new_str += temp[l];
             }
             l++;
@@ -106,5 +106,11 @@ vector<string> Matrix::deleteSpaces(vector<string> vec) {
         new_vec.push_back(new_str);
     }
     return new_vec;
+}
+
+double Matrix::calculateHeuristic(State<Point> *current, State<Point> *goal) {
+    double x = abs(current->getState()->getX() - goal->getState()->getX());
+    double y = abs(current->getState()->getY() - goal->getState()->getY());
+    return sqrtf(pow(x, 2) + pow(y, 2));
 }
 

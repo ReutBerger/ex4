@@ -18,11 +18,11 @@ string SearchSolver::solve(vector<string> problem) {
     /*TRY*///Searcher<Point> * bestFS = new BestFS<Point>();
     /*TRY*///Searcher<Point> * bFS = new BFS<Point>();
     /*TRY*///Searcher<Point> * dFS = new DFS<Point>();
-    Searcher<Point> * aStar = new AStar<Point>();
+   /*TRY*/// Searcher<Point> * aStar = new AStar<Point>();
 
     /*TRY*/ cout<< "solution = " << solution;
     // return the string of ths best solution
-    solution = getSolution(aStar->search(matrix));
+    solution = getSolution(this->mSearcher->search(matrix));
     return solution;
 }
 

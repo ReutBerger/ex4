@@ -22,6 +22,7 @@
 #include "BFS.h"
 #include "DFS.h"
 #include "BestFS.h"
+#include "AStar.h"
 
 //#define SERIAL_TEST
 
@@ -45,14 +46,16 @@ public:
 ////#else
             MyParallelServer *mps = new MyParallelServer();
             CacheManager<string> *cm = new FileCacheManager(5);
-            Solver<vector<string>, string> *solver = new SearchSolver();
+            // Run the project whit a star algorithm, cause according to the trail is the best searcher
+            Searcher<Point> * aStar = new AStar<Point>();
+            Solver<vector<string>, string> *solver = new SearchSolver(aStar);
             ClientHandler *c = new MyClientHandler(solver ,cm);
             mps->open(port, c);
             mps->stop();
-//            vector<string> vec = {"1,2,3","-1,5,6","7,8,9","0,0","2,2","end"};
-//            Searchable<Point> *m = new Matrix(vec);
-//            Searcher<Point>* searcher = new BFS<Point>();
-//            vector<State<Point>*> BFSsearch = searcher->search(m);
+            //vector<string> vec = {"1,2,3","-1,5,6","7,8,9","0,0","2,2","end"};
+           // Searchable<Point> *m = new Matrix(vec);
+           // Searcher<Point>* searcher = new BFS<Point>();
+            //vector<State<Point>*> BFSsearch = searcher->search(m);
 
 
 //#endif
@@ -67,36 +70,49 @@ public:
 
 int main(int argc, char *argv[]) {
     boot::Main::main(atoi(argv[1]));
-//   State<Point> *s = new State<Point>(new Point(0,0),1);
+  // State<Point> *s = new State<Point>(new Point(0,0),1);
 //   State<Point> *v = s;
 //   cout << s->getCost() << endl;
 ////   if (s->operator==(v))
 ////       cout << 1;
 ////   else
 ////       cout << 0;
-//   vector<string> vec = {"1,2,3,1,2,3,4,5,4,4,4",
+//   vector<string> vec =
+//           "1,1,1",
+//           "-1,-1,1",
+//           "1,1,1",
+//           "0,0",
+//           "2,0",
+//           "end"
+//   };
+//                        {"1,1,3,1,2,3,4,5,4,4,4",
+//                         "-1,2,3,1,2,3,4,5,4,4,4",
 //                         "1,2,3,1,2,3,4,5,4,4,4",
 //                         "1,2,3,1,2,3,4,5,4,4,4",
 //                         "1,2,3,1,2,3,4,5,4,4,4",
 //                         "1,2,3,1,2,3,4,5,4,4,4",
 //                         "1,2,3,1,2,3,4,5,4,4,4",
 //                         "1,2,3,1,2,3,4,5,4,4,4",
-//                         "1,2,3,1,2,3,4,5,4,4,4",
-//                         "1,2,3,1,2,3,4,5,4,4,4",
-//                         "1,2,3,1,2,3,4,5,4,4,4",
+//                         "1,2,3,1,2,3,4,5,4,4,-1",
+//                         "1,2,3,1,2,3,4,5,4,-1,4",
 //                         "1,2,3,1,2,3,4,5,4,4,4",
 //                         "0,0",
-//                         "10,2",
+//                         "10,10",
 //                         "end"};
 //   Searchable<Point> *m = new Matrix(vec);
-//   //BestFS<Point>* test = new BestFS<Point>();
-// //  test->search(m);
-////    for (int i = 0; i < 3; ++i) {
-////        for (int j = 0; j < 3; ++j) {
-////            cout << "(" << m->matrix[i][j].getState()->getX() << "," << m->matrix[i][j].getState()->getY();
-////            cout <<"," << m->matrix[i][j].getCost() << ")";
-////        }
-////        cout << endl;
+////   BestFS<Point>* test = new BestFS<Point>();
+////   test->search(m);
+//
+//    Searcher<Point> * aStar = new AStar<Point>();
+//    SearchSolver * solver = new SearchSolver(aStar);
+//
+//   string solu = solver->solve(vec);
+//   cout << solu<<endl;
+//    for (int i = 0; i < 3; ++i) {
+//        for (int j = 0; j < 3; ++j) {
+//
+//        }
+//        cout << endl;
 ////    }
 ////    vector<State<Point>> adj_vec = m->getAllPossibleStates(*s);
 ////    for (auto i :adj_vec)

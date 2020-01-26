@@ -146,10 +146,7 @@ public:
             this->closed.push_back(n);
             if (problem->isGoalState(n)) {
                 backTrace(problem);
-
-//                for (auto i :this->path)
-//                cout << "path: (" << i->getState()->getX() << ","<< i->getState()->getY() << ")" << endl;
-               return this->path;
+                return this->path;
             }
             vector<State<T>*> adjs = problem->getAllPossibleStates(n);
             int length = adjs.size();
@@ -174,7 +171,7 @@ public:
                 }
             }
         }
-        // The case that no path found
+        // the case that no path found
         return this->path;
     }
 };

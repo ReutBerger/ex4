@@ -16,7 +16,9 @@ public:
     virtual State<T>* getGoalState() = 0;
     virtual bool isGoalState(State<T>* state) = 0;
     virtual vector<State<T>*> getAllPossibleStates(State<T> *s) = 0;
-};
+    virtual double calculateHeuristic(State<T>* current, State<T>* goal) = 0;
+    // /*TRY*/string to_string(vector<State<T>*> path);
+    };
 
 
 #endif //EX4_SEARCHABLE_H

@@ -9,6 +9,8 @@
 #include <string>
 #include "Searchable.h"
 #include "Point.h"
+#include <math.h>
+
 
 class Matrix : public Searchable<Point>{
 private:
@@ -24,7 +26,8 @@ public:
     State<Point>* getGoalState() override;
     bool isGoalState(State<Point>* state) override ;
     vector<State<Point>*> getAllPossibleStates(State<Point> *s) override;
-   // /*TRY*/string getSolution(vector<State<Point>*> path);
+    double calculateHeuristic(State<Point>* current, State<Point>* goal) override ;
+   // /*TRY*/string to_string(vector<State<Point>*> path);
 };
 
 

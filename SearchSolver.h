@@ -15,18 +15,16 @@
 
 using namespace std;
 
-//template <class T>
-
 class SearchSolver : public Solver<vector<string>, string> {
+private:
+    Searcher<Point> *mSearcher;
 public:
-//    SearchSolver(Searcher<T> *searcher) {
-//        mSearcher = searcher;
-//    }
+    SearchSolver(Searcher<Point> *searcher) {
+        mSearcher = searcher;
+    }
 
     string solve(vector<string> problem) override;
     string getSolution(vector<State<Point>*> path);
-// TODO - implement.
-
 };
 
 
