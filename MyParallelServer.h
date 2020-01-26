@@ -18,7 +18,7 @@ private:
 public:
     void open(int port, ClientHandler* c) override ;
     void stop() override ;
-    int openServerFunc();
+    int openServerFunc() override ;
 };
 
 

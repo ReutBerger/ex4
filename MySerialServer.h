@@ -16,9 +16,9 @@ private:
     ClientHandler *m_ch;
 
 public:
-    void open(int port, ClientHandler* c);
-    void stop();
-    int openServerFunc();
+    void open(int port, ClientHandler* c) override;
+    void stop() override;
+    int openServerFunc() override ;
 };
 
 
