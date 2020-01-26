@@ -10,25 +10,21 @@
 #include "BestFS.h"
 #include "AStar.h"
 
+SearchSolver::SearchSolver(Searcher<Point> *searcher) {
+    this->mSearcher = searcher;
+}
+
 string SearchSolver::solve(vector<string> problem) {
     string solution;
     //create the problem - searchable
     Searchable<Point> *matrix = new Matrix(problem);
-    // check which algorithm is the best
-    /*TRY*///Searcher<Point> * bestFS = new BestFS<Point>();
-    /*TRY*///Searcher<Point> * bFS = new BFS<Point>();
-    /*TRY*///Searcher<Point> * dFS = new DFS<Point>();
-   /*TRY*/// Searcher<Point> * aStar = new AStar<Point>();
 
-    ///*TRY*/ cout<< "solution = " << solution;
-    // return the string of ths best solution
-
+    // return the string of the solution
     solution = getSolution(this->mSearcher->search(matrix));
-    //int num = this->mSearcher->getNumberOfNodes();
-    //cout << num << endl;
     return solution;
 }
 
+// Return the string of the path
 string SearchSolver::getSolution(vector<State<Point>*> path) {
     string solution;
     solution = "";

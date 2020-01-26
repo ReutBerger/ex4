@@ -58,8 +58,7 @@ public:
         return this->f;
     }
 
-    ~State(){}
+    ~State() {}
 };
-
 
 #endif //EX4_STATE_H

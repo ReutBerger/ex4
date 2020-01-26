@@ -3,7 +3,6 @@
 //
 
 #include "StringReverse.h"
-
 #include <algorithm>
 
 string StringReverse::solve(string problem) {

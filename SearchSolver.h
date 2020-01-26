@@ -19,13 +19,9 @@ class SearchSolver : public Solver<vector<string>, string> {
 private:
     Searcher<Point> *mSearcher;
 public:
-    SearchSolver(Searcher<Point> *searcher) {
-        mSearcher = searcher;
-    }
-
+    SearchSolver(Searcher<Point> *searcher);
     string solve(vector<string> problem) override;
     string getSolution(vector<State<Point>*> path);
 };
-
 
 #endif //EX4_SEARCHSOLVER_H

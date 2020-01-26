@@ -11,4 +11,5 @@ class Solver{
 public:
     virtual Solution solve(Problem problem) = 0;
 };
+
 #endif //EX4_SOLVER_H
