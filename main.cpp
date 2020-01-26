@@ -43,15 +43,15 @@ public:
 //            ClientHandler *c = new MyTestClientHandler(sr, cm);
 //            mss->open(port, c);
 //            mss->stop();
-////#else
-            MyParallelServer *mps = new MyParallelServer();
-            CacheManager<string> *cm = new FileCacheManager(5);
-            // Run the project whit a star algorithm, cause according to the trail is the best searcher
-            Searcher<Point> * aStar = new AStar<Point>();
-            Solver<vector<string>, string> *solver = new SearchSolver(aStar);
-            ClientHandler *c = new MyClientHandler(solver ,cm);
-            mps->open(port, c);
-            mps->stop();
+//////#else
+//            MyParallelServer *mps = new MyParallelServer();
+//            CacheManager<string> *cm = new FileCacheManager(5);
+//            // Run the project whit a star algorithm, cause according to the trail is the best searcher
+//            Searcher<Point> * aStar = new AStar<Point>();
+//            Solver<vector<string>, string> *solver = new SearchSolver(aStar);
+//            ClientHandler *c = new MyClientHandler(solver ,cm);
+//            mps->open(port, c);
+//            mps->stop();
             //vector<string> vec = {"1,2,3","-1,5,6","7,8,9","0,0","2,2","end"};
            // Searchable<Point> *m = new Matrix(vec);
            // Searcher<Point>* searcher = new BFS<Point>();
@@ -69,7 +69,7 @@ public:
 };
 
 int main(int argc, char *argv[]) {
-    boot::Main::main(atoi(argv[1]));
+   // boot::Main::main(atoi(argv[1]));
   // State<Point> *s = new State<Point>(new Point(0,0),1);
 //   State<Point> *v = s;
 //   cout << s->getCost() << endl;
@@ -77,14 +77,22 @@ int main(int argc, char *argv[]) {
 ////       cout << 1;
 ////   else
 ////       cout << 0;
-//   vector<string> vec =
-//           "1,1,1",
-//           "-1,-1,1",
-//           "1,1,1",
-//           "0,0",
-//           "2,0",
-//           "end"
-//   };
+   vector<string> vec =
+           {
+                   "14,10,16,4,17,2,11,15,5,-1",
+                   "1,10,6,10,2,7,4,15,1,2",
+                   "2,13,3,8,15,20,11,17,12,19",
+                   "5,7,14,6,18,13,20,2,8,5",
+                   "4,15,-1,20,15,7,11,12,19,2",
+                   "4,4,18,14,16,1,-1,1,18,15",
+                   "10,5,1,10,17,19,18,0,15,9",
+                   "15,10,20,15,0,2,20,3,0,13",
+                   "13,2,19,2,-1,8,-1,7,19,15",
+                   "-1,12,5,1,5,9,18,11,-1,5",
+                   "0,0",
+                   "9,9",
+                   "end"
+           };
 //                        {"1,1,3,1,2,3,4,5,4,4,4",
 //                         "-1,2,3,1,2,3,4,5,4,4,4",
 //                         "1,2,3,1,2,3,4,5,4,4,4",
@@ -103,11 +111,11 @@ int main(int argc, char *argv[]) {
 ////   BestFS<Point>* test = new BestFS<Point>();
 ////   test->search(m);
 //
-//    Searcher<Point> * aStar = new AStar<Point>();
-//    SearchSolver * solver = new SearchSolver(aStar);
+    Searcher<Point> * aStar = new AStar<Point>();
+    SearchSolver * solver = new SearchSolver(aStar);
 //
-//   string solu = solver->solve(vec);
-//   cout << solu<<endl;
+   string solu = solver->solve(vec);
+  cout << solu<<endl;
 //    for (int i = 0; i < 3; ++i) {
 //        for (int j = 0; j < 3; ++j) {
 //
