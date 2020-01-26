@@ -17,7 +17,8 @@ private:
     vector<vector<State<Point>>> matrix;
     State<Point>* startPoint;
     State<Point>* goalPoint;
-
+    int col;
+    int row;
     vector<string> deleteSpaces(vector<string> vec);
 
 public:
