@@ -18,5 +18,4 @@ public:
     int handleClient(int socket_client) override;
 };
 
-
 #endif //EX4_MYTESTCLIENTHANDLER_H

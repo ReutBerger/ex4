@@ -12,7 +12,7 @@ int MyTestClientHandler::handleClient(int socket_client){
     // Declare a buffer to get the data
     char buffer[1024] = {0};
 
-    while(1) {
+    while(true) {
         //reading from client
         int valread = read(socket_client, buffer, sizeof(buffer)-1);
 
