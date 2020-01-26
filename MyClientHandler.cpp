@@ -15,11 +15,11 @@ MyClientHandler::MyClientHandler(Solver<vector<string>, string> *solver, CacheMa
 
 int MyClientHandler::handleClient(int socket_client) {
     // Retrieve the matrix for this client
-    if (m_data_map.find(socket_client) == m_data_map.end()) {
+    if (this->m_data_map.find(socket_client) == this->m_data_map.end()) {
         cerr << "Data container not found for socket " << socket_client << endl;
         return -4;
     }
-    vector<string>& vec_problem = m_data_map[socket_client];
+    vector<string>& vec_problem = this->m_data_map[socket_client];
 
     //reading from client
     char buffer[5120];
@@ -30,18 +30,19 @@ int MyClientHandler::handleClient(int socket_client) {
     }
     buffer[valread] = 0;
 
-    cout << "sock:" << socket_client << ", line: " << buffer << endl;
+    /*TRY*/cout << "sock:" << socket_client << ", line: " << buffer << endl;
 
     // Add the new line to the matrix
     vec_problem.push_back((string)buffer);
 
     // When we get the last line, find a solution and send back to client
     if (!strcmp(buffer, "end")) {
-        string string_problem = "";
+        string string_problem;
+        string_problem = "";
         for (string s : vec_problem) {
             string_problem += s;
         }
-        cout << "problem: " << string_problem << endl;
+        /*TRY*/cout << "problem: " << string_problem << endl;
 
         // Get some solution
         string solution;
@@ -51,7 +52,7 @@ int MyClientHandler::handleClient(int socket_client) {
             solution = this->m_solver->solve(vec_problem);
             this->m_cache->insert(string_problem, solution);
         }
-        cout << "solution = " << solution << endl;
+        /*TRY*/cout << "solution = " << solution << endl;
 
         // Send the solution to the client
         int is_sent = send(socket_client, solution.c_str(), solution.length(), 0);
@@ -68,5 +69,5 @@ int MyClientHandler::handleClient(int socket_client) {
 
 void MyClientHandler::setupClient(int socket_client) {
     vector<string> vec_problem;
-    m_data_map[socket_client] = vec_problem;
+    this->m_data_map[socket_client] = vec_problem;
 }
