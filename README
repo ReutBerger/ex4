@@ -31,6 +31,7 @@ Therefore, in the main function we made the parallel server use the A Star algor
 *The project also support a serial server that handles each client at a time.
 *For your comfort, you can find examples for ten different matrix problem in file "AllMatrixInTrail.txt".
 
+
 # RUN PROJECT
    - Compile the project in terminal (on linux) with command:
      g++ -std=c++14 *.cpp -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -o a.out -pthread
