@@ -17,6 +17,7 @@ FileCacheManager::~FileCacheManager() {
 
 
 string FileCacheManager::makeStrHash(string &key) {
+    // Make key shorter by making it hash
     size_t str = hashStr(key);
     string hashStr = to_string(str);
     return hashStr;

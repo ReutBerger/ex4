@@ -6,6 +6,7 @@
 #include <netinet/in.h>
 #include "MyTestClientHandler.h"
 
+// Constructor
 int MyTestClientHandler::handleClient(int socket_client){
     cout << "in My Test handle client" << endl;
 
@@ -26,18 +27,24 @@ int MyTestClientHandler::handleClient(int socket_client){
         string problem = string(buffer);
         cout << "problem: (" << valread << "), " << problem << endl;
         if (!problem.compare("end")) {
+            // We got to the last line of the client problem, so close the client socket
             close(socket_client);
             break;
         }
+
+        // Get some solution
         string solution;
+        // If the problem already exists in the directory, return it
         if (this->cm->find(problem)) {
             solution = this->cm->get(problem);
         } else {
+            // Solve the problem and add it to directory
             solution = this->solver->solve(problem);
             this->cm->insert(problem, solution);
         }
         cout << "solution = " << solution << endl;
 
+        // Send the solution to the client
         char* s = &solution[0];
         int is_sent = send(socket_client, s, solution.length(), 0);
         if (is_sent == -1) {

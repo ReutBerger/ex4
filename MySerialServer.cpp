@@ -76,6 +76,7 @@ int MySerialServer::openServerFunc(){
             return -4;
         }
 
+        // Handle client problems
         this->m_ch->handleClient(client_socket);
     }
 }

@@ -11,6 +11,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
+// C function, start point of the thread
 static int openServer(MyParallelServer* obj) {
     return obj->openServerFunc();
 }
@@ -79,7 +80,7 @@ int MyParallelServer::openServerFunc() {
         // Time-out is set for 2 minutes
         struct timeval tv = {120, 0};
 
-        /* Block until input arrives on one or more active sockets. */
+        // Block until input arrives on one or more active sockets
         rfds = active_rfds;
         rc = select (FD_SETSIZE, &rfds, NULL, NULL, &tv);
         if (rc < 0) {
@@ -93,17 +94,18 @@ int MyParallelServer::openServerFunc() {
             break;
         }
         else {
-            /* Service all the sockets with input pending. */
+            // Service all the sockets with input pending
             for (int i = 0; i < FD_SETSIZE; ++i) {
                 if (FD_ISSET (i, &rfds)) {
                     if (i == this->socketfd) {
-                        /* Connection request on original socket. */
+                        // Connection request on original socket
                         int size = sizeof(clientname);
                         int newsock = accept(this->socketfd, (struct sockaddr *) &clientname, (socklen_t *) &size);
                         if (newsock < 0) {
                             cerr << "accept() failure" << endl;
                             continue;
                         }
+                        // Push all new sockets to a vector
                         sockestsVec.push_back(newsock);
 
                         cout << "Parallel Server: connect from host " << inet_ntoa(clientname.sin_addr)
@@ -113,7 +115,7 @@ int MyParallelServer::openServerFunc() {
 
                         FD_SET (newsock, &active_rfds);
                     } else {
-                        /* Data arriving on an already-connected socket. */
+                        // Data arriving on an already-connected socket
                         if (this->m_ch->handleClient(i) <= 0) {
                             close(i);
                             FD_CLR (i, &active_rfds);

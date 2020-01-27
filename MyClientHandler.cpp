@@ -8,6 +8,7 @@
 #include <vector>
 #include <cstring>
 
+// Constructor
 MyClientHandler::MyClientHandler(Solver<vector<string>, string> *solver, CacheManager<string> *cache) {
     this->m_solver = solver;
     this->m_cache = cache;
@@ -46,9 +47,11 @@ int MyClientHandler::handleClient(int socket_client) {
 
         // Get some solution
         string solution;
+        // If the problem already exists in the directory, return it
         if (this->m_cache->find(string_problem)) {
             solution = this->m_cache->get(string_problem);
         } else {
+            // Solve the problem and add it to directory
             solution = this->m_solver->solve(vec_problem);
             this->m_cache->insert(string_problem, solution);
         }
