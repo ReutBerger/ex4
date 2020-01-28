@@ -21,7 +21,7 @@ private:
     queue<State<T> *> nodesQueue;
     vector<State<T>*> visitedNodes;
     vector<State<T>*> path;
-    double totalCost = 0;
+    double totalCost;
 
 public:
     // Constructor
@@ -30,6 +30,13 @@ public:
     // Implement of BFS algorithm
     vector<State<T>*> search(Searchable<T>* searchable) override {
         // Initialize operators
+        while (!this->nodesQueue.empty()) {
+            this->nodesQueue.pop();
+        }
+        this->path.clear();
+        this->visitedNodes.clear();
+        totalCost = 0;
+
         State<T>* initialState = searchable->getInitialState();
         this->nodesQueue.push(initialState);
         this->visitedNodes.push_back(initialState);

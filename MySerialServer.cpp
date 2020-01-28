@@ -1,19 +1,16 @@
 //
 // Created by reut on 1/12/20.
 //
+
+#include <iostream>
 #include <thread>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <unistd.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
 
 #include "MySerialServer.h"
 
 using namespace std;
-
-// C function, start point of the thread
-static int openServer(MySerialServer* obj) {
-    return obj->openServerFunc();
-}
 
 void MySerialServer::open(int port, ClientHandler* c) {
     this->socketfd = -1;
@@ -21,7 +18,7 @@ void MySerialServer::open(int port, ClientHandler* c) {
     this->m_ch = c;
 
     // Launch the server thread
-    thread thread_obj(openServer, this);
+    thread thread_obj(&MySerialServer::openServerFunc, this);
     thread_obj.join();
 }
 

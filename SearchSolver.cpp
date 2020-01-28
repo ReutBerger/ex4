@@ -15,12 +15,14 @@ SearchSolver::SearchSolver(Searcher<Point> *searcher) {
 }
 
 string SearchSolver::solve(vector<string> problem) {
-    string solution;
     //create the problem - searchable
     Searchable<Point> *matrix = new Matrix(problem);
 
     // return the string of the solution
-    solution = getSolution(this->mSearcher->search(matrix));
+    string solution = getSolution(this->mSearcher->search(matrix));
+
+    delete matrix;
+
     return solution;
 }
 

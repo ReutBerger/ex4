@@ -83,6 +83,13 @@ public:
 
     // Implement of A star algorithm
     vector<State<T>*> search(Searchable<T> *problem) override {
+        // Initialize operators
+        while (!this->open.empty()) {
+            this->open.pop();
+        }
+        this->closed.clear();
+        this->path.clear();
+
         // Initialization to the initial state
         State<T> *start = problem->getInitialState();
         start->setChangeCost(start->getCost());

@@ -30,6 +30,13 @@ public:
     // Implement of DFS algorithm
     vector<State<T>*> search(Searchable<T>* searchable) override {
         // Initialize operators
+        while (!this->stateStack.empty()) {
+            this->stateStack.pop();
+        }
+        this->path.clear();
+        this->visitedNodes.clear();
+        totalCost = 0;
+
         State<T>* initialState = searchable->getInitialState();
         this->stateStack.push(initialState);
         this->visitedNodes.push_back(initialState);

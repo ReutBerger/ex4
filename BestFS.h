@@ -145,6 +145,13 @@ public:
     // Implement of best first search algorithm
     vector<State<T>*> search(Searchable<T> *problem) override {
         State<T>* n;
+        // Initialize operators
+        while (!this->open.empty()) {
+            this->open.pop();
+        }
+        this->closed.clear();
+        this->path.clear();
+
         // Initialization to the initial state
         problem->getInitialState()->setChangeCost(problem->getInitialState()->getCost());
         this->open.push(problem->getInitialState());

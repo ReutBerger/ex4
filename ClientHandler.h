@@ -5,9 +5,7 @@
 #ifndef EX4_CLIENTHANDLER_H
 #define EX4_CLIENTHANDLER_H
 
-#include <iostream>
-
-using namespace std;
+//using namespace std;
 
 class ClientHandler {
 public:
