@@ -42,7 +42,6 @@ int MyParallelServer::openServerFunc() {
         return -1;
     }
 
-    // TODO: to remove?
     int enable = 1;
     setsockopt(this->socketfd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(enable));
     setsockopt(this->socketfd, SOL_SOCKET, SO_REUSEPORT, &enable, sizeof(enable));
@@ -117,18 +116,12 @@ int MyParallelServer::openServerFunc() {
                         if ((rc = this->m_ch->handleClient(i)) <= 0) {
                             if (rc < 0) close(i);
                             FD_CLR (i, &active_rfds);
-                            // TODO: GET I OUT OF sockestsVec
                             }
                         }
                     }
                 }
             }
         }
-
-//    // Close all client sockets
-//    for (int sock : sockestsVec) {
-//        close(sock);
-//    }
 
     return retVal;
 }

@@ -30,6 +30,13 @@ namespace boot {
                 mps->open(port, c);
                 mps->stop();
 
+                // Free new members
+                delete mps;
+                delete cm;
+                delete aStar;
+                delete solver;
+                delete c;
+
                 // Part 2 of this project - trying serialServer on 'string reverse' problem
                 //MySerialServer *mss = new MySerialServer();
                 //Solver<string ,string> *sr = new StringReverse();
@@ -40,7 +47,6 @@ namespace boot {
             } catch (const char *e) {
                 cout << e << endl;
             }
-            // TODO: delete all new members
             return 0;
         }
     };

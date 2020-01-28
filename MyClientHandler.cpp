@@ -34,8 +34,6 @@ int MyClientHandler::handleClient(int socket_client) {
     }
     buffer[valread] = 0;
 
-    //cout << "sock: " << socket_client << ", line: " << buffer << endl;
-
     // Add the new line to the matrix
     vec_problem.push_back((string)buffer);
 
@@ -59,7 +57,7 @@ void MyClientHandler::findSolutionAndSend(int s, vector<string> vec_problem) {
     string problem = "";
     for (string s : vec_problem)
         problem += s;
-    //cout << "problem: " << problem << endl;
+    cout << "problem: " << problem << endl;
 
     m_mtx.lock();
 
@@ -73,7 +71,7 @@ void MyClientHandler::findSolutionAndSend(int s, vector<string> vec_problem) {
         solution = this->m_solver->solve(vec_problem);
         this->m_cache->insert(problem, solution);
     }
-    //cout << "solution: " << solution << endl;
+    cout << "solution: " << solution << endl;
 
     // Send the solution to the client
     if (send(s, solution.c_str(), solution.length(), 0) < 0)
