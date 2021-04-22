@@ -43,7 +43,3 @@ Therefore, in the main function we made the parallel server use the A Star algor
    - The server will wait for client's connections and will send back data.
    - If after two minutes no client will connect, the server will close.
 
-
-# LINKS
-- Our link to GitHub project:
-  https://github.com/esimony/ex4.git
